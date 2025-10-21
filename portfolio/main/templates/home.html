@@ -11,6 +11,17 @@
 {% endblock %}
 
 {% block content %}
+<!--First div = to search for my project-->
+<div class="filters">
+    <input type="text" id="name-search" placeholder="Search by project" />
+    <div class="tags-list">
+        <!--Collects all tags, passes through a for loop-->
+      {% for tag in tags %}
+      <!--Tags are rendered to lower case, always-->
+        <button class="tag" data-tag="{{ tag.name|lower }}">{{ tag.name }}</button>
+      {% endfor %}
+    </div>
+</div>
 <p>This is the home page.</p>
 {% endblock content %}
 

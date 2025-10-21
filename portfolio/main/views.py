@@ -4,7 +4,9 @@ from .models import Project, Tag
 # Create your views here.
 
 def home(request):
-    return render(request, "home.html") # Rendering just means to show on the screen.
+    projects = Project.objects.all() # Gives access to all projects on the home page. 
+    tags = Tag.objects.all()
+    return render(request, "home.html", {"projects": projects, "tags": tags}) # Rendering just means to show on the screen.
 
 def contact(request):
     return render(request, "contact.html")

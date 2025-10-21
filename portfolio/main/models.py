@@ -18,7 +18,9 @@ class Project(models.Model):
         return self.title
 
 # Because we have multiple images per project, we need to create a separate model for the images.
+# There can only be one image per project - hence the use of foreign key. 
 class ProjectImage(models.Model):
+    # If the project is deleted, then this cascades to delete the image.
     models.ForeignKey(Project, related_name="images", on_delete=models.CASCADE)
     image = models.ImageField(upload_to="project_images/")
 

@@ -10,7 +10,7 @@ class Tag(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField
+    description = models.TextField()
     tags = models.ManyToManyField(Tag, related_name="projects") # Many-to-many because many projects can have many tags. 
     link = models.URLField(max_length=200, blank=True) # Blank = True (Ok if no link for project).
 

@@ -1,14 +1,15 @@
-{% load static %}
+{% extends 'base.html' %} <!--Inherits from base.html-->
+{% load static %} <!--This enables the static tag-->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Home</title>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}"> <!--Look inside the static directory, then base.css-->
-</head>
-<body>
-    
-</body>
-</html>
+<!--All that is needed, is to modify the empty blocks and title block-->
+
+{% block title %}
+  Get In Touch
+{% endblock title %}
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}" />
+{% endblock %}
+
+{% block content %}
+<p>This is the contact page.</p>
+{% endblock content %}

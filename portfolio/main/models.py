@@ -21,7 +21,7 @@ class Project(models.Model):
 # There can only be one image per project - hence the use of foreign key. 
 class ProjectImage(models.Model):
     # If the project is deleted, then this cascades to delete the image.
-    models.ForeignKey(Project, related_name="images", on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, related_name="images", on_delete=models.CASCADE)
     image = models.ImageField(upload_to="project_images/")
 
     def __str__(self):

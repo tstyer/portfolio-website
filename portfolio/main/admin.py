@@ -16,3 +16,7 @@ class ProjectAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
+
+admin.site.register(Tag, TagAdmin)
+admin.site.register(Project, ProjectAdmin)
+admin.site.register(ProjectImage)

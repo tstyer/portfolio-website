@@ -124,4 +124,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = "/media/" # This is the direcotry where I install all media.
+MEDIA_URL = "/media/" # This is the directory where I install all media.
+MEDIA_ROOT = os.path.join(BASE_DIR, "media") # This is the actual location of my media.

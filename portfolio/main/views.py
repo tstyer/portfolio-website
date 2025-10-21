@@ -3,7 +3,7 @@ from .models import Project, Tag
 
 # Create your views here.
 
-def Home(request):
+def home(request):
     return render(request, "home.html") # Rendering justr means to show on the screen.
 
 def contact(request):

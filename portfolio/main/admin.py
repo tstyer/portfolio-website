@@ -12,3 +12,7 @@ class ProjectAdmin(admin.ModelAdmin):
     inlines = [ProjectImageInline]
     search_fields = ("title", "description") # Can search based on title and/or description. 
     list_filter = ("tags",) # Need trailing comma so it's treated as a tupple. 
+
+class TagAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)

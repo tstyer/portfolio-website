@@ -24,11 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w6a1-meh!qik3$@!hqtlkace@&iz1p!&v96s8qez#j@epfmk6t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1:8000', '.herokuapp.com', 'localhost' ]
+TEMPLATES = [{
+    "BACKEND": "django.template.backends.django.DjangoTemplates",
+    "DIRS": [],          # optional; can leave empty if using app-level templates
+    "APP_DIRS": True,    # this must be True for main/templates to be discovered
+    "OPTIONS": {"context_processors": [...]},
+}]
 
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000", "http://localhost:8000"]
+ALLOWED_HOSTS = ['http://127.0.0.1:8000', '.herokuapp.com', 'localhost', '*' ]
 
 
 # Application definition

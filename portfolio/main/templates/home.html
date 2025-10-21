@@ -1,11 +1,11 @@
 {% extends 'base.html' %} <!--Inherits from base.html-->
-{% load static %} <!--This loads all the html  from base.html-->
+{% load static %} <!--This enables the static tag-->
 
 <!--All that is needed, is to modify the empty blocks and title block-->
 
 {% block title %}
   Home Page
-{% endblock %}
+{% endblock title %}
 
 {% block content %}
 <p>This is the home page.</p>

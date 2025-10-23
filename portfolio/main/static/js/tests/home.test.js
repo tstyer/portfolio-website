@@ -1,0 +1,2 @@
+const filterProjects = require('../home');
+

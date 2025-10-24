@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-const { filterProjects } = require('../static/js/home'); // adjust path
+const { filterProjects } = require('../home'); // adjust path
 
 describe('filterProjects', () => {
   beforeEach(() => {

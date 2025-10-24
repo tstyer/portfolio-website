@@ -22,4 +22,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
 })
 
-module.exports = filterProjects;
+module.exports = {filterProjects};

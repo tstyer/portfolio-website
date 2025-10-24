@@ -13,7 +13,7 @@ def contact(request):
 
 def project(request, id):
     project = get_object_or_404(project, pk=id) # Look for the pk we specified, within the project model. 
-    return render(request, "project.html" {"project": project})
+    return render(request, "project.html", {"project": project})
 
 # Self-learn note:
  # Views are functions called when wanting to display a page. 

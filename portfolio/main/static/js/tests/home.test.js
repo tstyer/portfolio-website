@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-const filterProjects = require('../home');
+const { filterProjects } = require('../home');
 
 describe('filterProjects', () => {
   beforeEach(() => {

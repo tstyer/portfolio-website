@@ -44,3 +44,18 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.project h2 {
+  margin-top: 0;
+}
+
+.project p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .tags-list {
+    flex-direction: column;
+  }
+}

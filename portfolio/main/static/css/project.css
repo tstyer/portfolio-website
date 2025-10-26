@@ -62,3 +62,36 @@ p {
   right: 0;
   border-radius: 0 3px 3px 0; /* Adjusted for consistency */
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project-card {
+    flex-direction: column;
+  }
+
+  .project-info,
+  .carousel {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .carousel {
+    order: -1; /* Puts the carousel above the info on small screens */
+    margin-left: 0; /* Resets the margin for smaller screens */
+  }
+}
+
+.carousel-item {
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  background-color: black; /* Fill the background with black */
+  width: 100%; /* Full width of the carousel */
+  height: 400px; /* Fixed height, adjust as needed */
+}
+
+.carousel-item img {
+  max-height: 100%; /* Limit the image height to fit within the container */
+  max-width: 100%; /* Limit the image width to fit within the container */
+  object-fit: contain; /* Maintain aspect ratio and fit the image within the bounds */
+}

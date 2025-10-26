@@ -52,3 +52,13 @@ p {
   user-select: none; /* Prevent text selection */
   z-index: 10; /* Ensure controls are above the images */
 }
+
+.carousel-control.prev {
+  left: 0;
+  border-radius: 3px 0 0 3px; /* Adjusted for consistency */
+}
+
+.carousel-control.next {
+  right: 0;
+  border-radius: 0 3px 3px 0; /* Adjusted for consistency */
+}

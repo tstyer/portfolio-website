@@ -1,3 +1,7 @@
+const nameSearch = document.getElementById("name-search");
+const projects = document.querySelectorAll(".project");
+const tags = document.querySelectorAll(".tag");
+
 function filterProjects(nameSearchEl, projectEls) {
   const nameQuery = (nameSearchEl.value || "").toLowerCase();
 
@@ -10,8 +14,6 @@ function filterProjects(nameSearchEl, projectEls) {
 
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", () => {
-    const nameSearch = document.getElementById("name-search");
-    const projects = document.querySelectorAll(".project");
     // wire up in the browser
     nameSearch.addEventListener("input", () =>
       filterProjects(nameSearch, projects)
@@ -19,7 +21,6 @@ if (typeof document !== "undefined") {
   });
 
   // The below function will filter based on tags clicked.
-
   tags.forEach((tag) => {
         tag.addEventListener("click", function () {
             const selectedTag = this.getAttribute("data-tag")
@@ -38,4 +39,9 @@ if (typeof document !== "undefined") {
   nameSearch.addEventListener("keyup", filterProjects)
 }
 
-module.exports = { filterProjects };
+// Make available to Jest (Node) but don't crash in the browser.
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { filterProjects };
+} else {
+  window.filterProjects = filterProjects;
+}

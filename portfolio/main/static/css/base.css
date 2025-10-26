@@ -36,3 +36,29 @@ header {
   justify-content: flex-start;
   gap: 20px;
 }
+
+.nav-menu li {
+  padding: 5px 0;
+}
+
+.nav-menu a {
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+  color: #d1eaff;
+}
+
+/* Main Content Area */
+main {
+  margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

@@ -1,0 +1,18 @@
+/* Project Card */
+.project-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  max-width: 1200px; /* Adjust based on your preference */
+  margin: auto;
+  padding: 20px;
+}
+
+.project-info {
+  flex: 1;
+  padding-right: 20px; /* Adds some space between the text and the carousel */
+}

@@ -16,3 +16,39 @@
   flex: 1;
   padding-right: 20px; /* Adds some space between the text and the carousel */
 }
+
+h1,
+p {
+  margin-bottom: 20px;
+}
+
+/* Carousel */
+.carousel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative; /* Added to position controls */
+  max-width: 50%; /* Adjust the width of the carousel relative to the card */
+  margin-left: 20px; /* Optional: Adds some space between the info and carousel */
+}
+
+.carousel-images {
+  display: flex;
+  flex: 1; /* Allows the carousel to fill the space */
+  overflow: hidden;
+  position: relative; /* Ensure the images container doesn't overlap controls */
+}
+
+/* Carousel Controls */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+  z-index: 10; /* Ensure controls are above the images */
+}

@@ -1,0 +1,54 @@
+/* Typography (Google fonts loaded in <head>) */
+:root{
+  --font-header: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --text: #222;
+  --bg: #f4f4f4;
+  --brand: #007bff;
+  --brand-100: #d1eaff;
+}
+
+/* Reset / base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font-body);
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  padding: 20px;
+}
+
+/* Headings use Poppins for a confident tone */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-header);
+  letter-spacing: -0.25px;
+}
+h1 { font-weight: 800; font-size: clamp(2rem, 4.5vw, 3rem); }
+h2 { font-weight: 700; font-size: clamp(1.25rem, 2.5vw, 2rem); }
+
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Header & nav */
+header {
+  background: var(--brand);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+.nav-menu a { color: #fff; transition: color .25s ease; }
+.nav-menu a:hover { color: var(--brand-100); }
+
+/* Layout */
+main { margin-top: 20px; }
+
+/* Responsive nav */
+@media (max-width: 768px) {
+  .nav-menu { flex-direction: column; gap: 10px; }
+}

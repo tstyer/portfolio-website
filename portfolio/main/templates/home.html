@@ -1,42 +1,64 @@
-{% extends 'base.html' %} <!--Inherits from base.html-->
-{% load static %} <!--This enables the static tag-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio – Home</title>
 
-<!--All that is needed, is to modify the empty blocks and title block-->
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
-{% block title %}
-  Home Page
-{% endblock title %}
-{% block extrahead %}
-  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
-{% endblock %}
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/home.css" />
+</head>
+<body>
+  <header>
+    <ul class="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </header>
 
-{% block content %}
-<!--First div = to search for my project-->
-<div class="filters">
-    <input type="text" id="name-search" placeholder="Search by project" />
-    <div class="tags-list">
-        <!--Collects all tags, passes through a for loop-->
-      {% for tag in tags %}
-      <!--Tags are rendered to lower case, always-->
-        <button class="tag" data-tag="{{ tag.name|lower }}">{{ tag.name }}</button>
-      {% endfor %}
-    </div>
-</div>
-<!--Second = display of my projects-->
-<div class="projects-list">
-    <!--Loops through all my projects-->
-    {% for project in projects %}
-      <div class="project" data-name="{{ project.title|lower }}" data-tags="{{ project.tags.all|join:', '|lower }}">
-        <!--Project title, followed by desc.-->
-        <h2><a href="{% url 'project' project.id %}">{{project.title}}</a></h2>
-        <p>{{project.description}}</p>
-        <p>Tags: {{project.tags.all|join:', '}}</p>
+  <main>
+    <!-- Page header -->
+    <section>
+      <h1>Travis Styer</h1>
+      <h2>Front End Developer</h2>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+      <input type="text" id="name-search" placeholder="Search by project" />
+      <div class="tags-list">
+        <!-- Replace / add your real tags -->
+        <button class="tag" data-tag="javascript">JavaScript</button>
+        <button class="tag" data-tag="django">Django</button>
+        <button class="tag" data-tag="testing">Testing</button>
       </div>
-    {% endfor %}
-  </div>
-<p>Select one of the tags, or type in the search field to see my work!</p>
-{% endblock content %}
+    </section>
 
-{% block extra_js %}
-  <script src="{% static 'js/home.js' %}"></script>
-{% endblock %}
+    <!-- Projects -->
+    <section class="projects-list">
+      <!-- Duplicate this block per project -->
+      <div class="project" data-name="star hopper" data-tags="javascript, testing">
+        <h2><a href="project.html">Star Hopper</a></h2>
+        <p>Falling-platform JS game with auto-jump and timers.</p>
+        <p>Tags: JavaScript, Testing</p>
+      </div>
+
+      <div class="project" data-name="portfolio website" data-tags="django, javascript">
+        <h2><a href="project.html">Portfolio Website</a></h2>
+        <p>Responsive developer portfolio with search and tag filters.</p>
+        <p>Tags: Django, JavaScript</p>
+      </div>
+    </section>
+
+    <p>Select a tag or type in the search field to filter projects.</p>
+  </main>
+
+  <!-- JS -->
+  <script src="assets/js/home.js" defer></script>
+</body>
+</html>

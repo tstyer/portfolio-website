@@ -1,42 +1,49 @@
-{% extends 'base.html' %} <!--Inherits from base.html-->
-{% load static %} <!--This enables the static tag-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio – Project</title>
 
-<!--All that is needed, is to modify the empty blocks and title block-->
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
-{% block title %}
-  Project Page
-{% endblock title %}
-{% block extrahead %}
-  <link rel="stylesheet" href="{% static 'css/project.css' %}" />
-{% endblock %}
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/project.css" />
+</head>
+<body>
+  <header>
+    <ul class="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </header>
 
-{% block content %}
-  <div class="project-card">
-    <!--Information on selected project-->
-    <div class="project-info">
-      <h1>{{ project.title }}</h1>
-      <p>
-        <a href="{{ project.link }}">Project Link</a>
-      </p>
-      <p>{{ project.description }}</p>
-      <a href="{% url 'home' %}">Back to Home</a> <!--Allows you to go back home.-->
-    </div>
-    <!--Project images-->
-    <div class="carousel">
-      <div class="carousel-images">
-        {% for image in project.images.all %}
-          <div class="carousel-item">
-            <img src="{{ image.image.url }}" alt="Project image" />
-          </div>
-        {% endfor %}
+  <main>
+    <div class="project-card">
+      <!-- Project info -->
+      <div class="project-info">
+        <h1>Star Hopper</h1>
+        <p><a href="https://example.com">Project Link</a></p>
+        <p>Short description of the project goes here. Replace with your real copy.</p>
+        <a href="index.html">Back to Home</a>
       </div>
-      <!--Links allowing navigation on carousel-->
-      <a class="carousel-control prev" onclick="moveSlide(-1)">&#10094;</a>
-      <a class="carousel-control next" onclick="moveSlide(1)">&#10095;</a>
-    </div>
-  </div>
-{% endblock content %}
 
-{% block extra_js %}
-  <script src="{% static 'js/project.js' %}"></script>
-{% endblock %}
+      <!-- Carousel -->
+      <div class="carousel">
+        <div class="carousel-images">
+          <!-- Replace with your actual screenshots -->
+          <div class="carousel-item"><img src="assets/images/project1-1.jpg" alt="Project screenshot 1"></div>
+          <div class="carousel-item"><img src="assets/images/project1-2.jpg" alt="Project screenshot 2"></div>
+        </div>
+        <a class="carousel-control prev" onclick="moveSlide(-1)">&#10094;</a>
+        <a class="carousel-control next" onclick="moveSlide(1)">&#10095;</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/project.js" defer></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 from .models import Project, Tag, Comment
 from .forms import CommentForm
@@ -38,21 +39,21 @@ def project(request, id):
 # Below is the ability to add comments to satisfy CRUD.
 
 @login_required
+@require_POST
 def comment_create(request, id):
     """
     Create a new comment on a project.
     """
     project_obj = get_object_or_404(Project, pk=id)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.project = project_obj
-            comment.user = request.user
-            comment.save()
-            messages.success(request, "Comment posted.")
-        else:
-            messages.error(request, "Please fix the errors and try again.")
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.project = project_obj
+        comment.user = request.user
+        comment.save()
+        messages.success(request, "Comment posted.")
+    else:
+        messages.error(request, "Please fix the errors and try again.")
     # Go back to the project page
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
@@ -75,6 +76,7 @@ def comment_update(request, id, comment_id):
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
 @login_required
+@require_POST
 def comment_delete(request, id, comment_id):
     """
     Delete a comment (only by its owner).
@@ -82,15 +84,11 @@ def comment_delete(request, id, comment_id):
     project_obj = get_object_or_404(Project, pk=id)
     comment = get_object_or_404(Comment, pk=comment_id, project=project_obj, user=request.user)
 
-    if request.method == "POST":
-        comment.delete()
-        messages.success(request, "Comment deleted.")
+    comment.delete()
+    messages.success(request, "Comment deleted.")
 
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
 # Self-learn note:
 #  Views are functions called when wanting to display a page.
 #  You need to import models to do so.
-
-
-

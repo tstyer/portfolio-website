@@ -1,4 +1,4 @@
-from django.apps import AppCompatActivity, AppConfig
+from django.apps import AppConfig
 
 
 class MainConfig(AppConfig):

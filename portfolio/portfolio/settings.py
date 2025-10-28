@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main', # Adding your created app links it to the django project
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [

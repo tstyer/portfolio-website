@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -8,6 +10,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -16,6 +19,7 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
 
 # Because we have multiple images per project, we need to create a separate model for the images.
 # There can only be one image per project - hence the use of foreign key. 
@@ -28,7 +32,44 @@ class ProjectImage(models.Model):
         return f"{self.project.title} Image"
     
 
+# Added models to satisfy CRUD for comments
+
+class Profile(models.Model):
+    """
+    Simple viewer profile tied to Django's auth User.
+    - Gives you a place to store display info for commenters.
+    - A Profile can be auto-created on user signup via a post_save signal (optional).
+    """
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    display_name = models.CharField(max_length=120, blank=True)  # Optional public name
+    joined_at = models.DateTimeField(default=timezone.now)       # Date user/profile created
+
+    def __str__(self):
+        # Prefer a friendly name if set, else fall back to the username
+        return self.display_name or self.user.get_username()
+
+
+class Comment(models.Model):
+    """
+    User comments on a Project.
+    - ForeignKey to Project (what the comment is about)
+    - ForeignKey to User (who wrote it)
+    - Content text field for the comment body
+    - created_at / updated_at for audit & edit history
+    """
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments")
+    content = models.TextField()                                  # "Give me suggestions or leave feedback!"
+    created_at = models.DateTimeField(default=timezone.now)       # Date Posted
+    updated_at = models.DateTimeField(auto_now=True)              # Date Updated (auto on save)
+
+    class Meta:
+        ordering = ["-created_at"]  # Newest first
+
+    def __str__(self):
+        return f"Comment by {self.user} on {self.project}"
+    
 
 # *Self-learn note:
-    # To create a model, you need to include models.Model in parens to use a single model for the class. 
-    # Then, followed by dot notation, what sub-categories do you install? title, textfield, etc.
+#     To create a model, you need to include models.Model in parens to use a single model for the class. 
+#     Then, followed by dot notation, what sub-categories do you install? title, textfield, etc.

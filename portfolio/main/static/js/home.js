@@ -10,6 +10,7 @@ function filterProjects(nameSearchEl, projectEls) {
   });
 }
 
+// Functions will hide projects when page loads
 function hideAll() {
   projects.forEach((p) => (p.style.display = "none"));
 }
@@ -27,27 +28,35 @@ function filterByTag(tag) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (nameSearch && projects.length) {
-    nameSearch.addEventListener("input", () => filterProjects(nameSearch, projects));
-    nameSearch.addEventListener("keyup", () => filterProjects(nameSearch, projects));
+  // 1) Start hidden
+  hideAll();
+
+  // 2) Typing: clear active tag(s) and use the tested function
+  if (nameSearch) {
+    nameSearch.addEventListener("input", () => {
+      clearActiveTags();
+      filterProjects(nameSearch, projects);
+      // If the box is empty, keep everything hidden
+      if (!nameSearch.value.trim()) hideAll();
+    });
   }
 
-  if (tags.length && projects.length) {
-    tags.forEach((tag) => {
-      tag.addEventListener("click", function () {
-        const selectedTag = this.getAttribute("data-tag") || "";
-        projects.forEach((project) => {
-          const projectTags = (project.getAttribute("data-tags") || "").toLowerCase();
-          project.style.display = projectTags.includes(selectedTag.toLowerCase()) ? "" : "none";
-        });
+  // 3) Tag clicks: set active, clear search, filter by tag
+  if (tags.length) {
+    tags.forEach((tagBtn) => {
+      tagBtn.addEventListener("click", function () {
+        clearActiveTags();
+        this.classList.add("active");
+        if (nameSearch) nameSearch.value = ""; // ensure tag filter is applied
+        filterByTag(this.dataset.tag || "");
       });
     });
   }
 });
 
-// Export for tests if needed
+// Export for test
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { filterProjects };
+  module.exports = { filterProjects, hideAll, filterByTag };
 } else {
   window.filterProjects = filterProjects;
 }

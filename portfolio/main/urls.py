@@ -2,8 +2,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.home, name="home"), # Going to nothing = home page.
-    path("home/", views.home, name="home"), # Standard home url. 
+    path("", views.home, name="home"),
     path("contact/", views.contact, name="contact"),
-    path("project/<int:id>/", views.project, name="project"), # after project, you go to a specific variable (given to each project)
+
+    # Project detail (uses your existing view name 'project')
+    path("project/<int:id>/", views.project, name="project"),
+
+    # CRUD for comments
+    path("project/<int:id>/comments/create/", views.comment_create, name="comment_create"),
+    path("project/<int:id>/comments/<int:comment_id>/update/", views.comment_update, name="comment_update"),
+    path("project/<int:id>/comments/<int:comment_id>/delete/", views.comment_delete, name="comment_delete"),
 ]

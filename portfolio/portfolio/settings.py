@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w6a1-meh!qik3$@!hqtlkace@&iz1p!&v96s8qez#j@epfmk6t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATES = [{
     "BACKEND": "django.template.backends.django.DjangoTemplates",

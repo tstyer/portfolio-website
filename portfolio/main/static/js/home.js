@@ -10,6 +10,22 @@ function filterProjects(nameSearchEl, projectEls) {
   });
 }
 
+function hideAll() {
+  projects.forEach((p) => (p.style.display = "none"));
+}
+
+function clearActiveTags() {
+  document.querySelectorAll(".tag.active").forEach((t) => t.classList.remove("active"));
+}
+
+function filterByTag(tag) {
+  const t = (tag || "").toLowerCase();
+  projects.forEach((project) => {
+    const projectTags = (project.getAttribute("data-tags") || "").toLowerCase();
+    project.style.display = projectTags.includes(t) ? "" : "none";
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   if (nameSearch && projects.length) {
     nameSearch.addEventListener("input", () => filterProjects(nameSearch, projects));

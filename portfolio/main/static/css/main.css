@@ -10,6 +10,7 @@
   --color-accent: #4EE0CB;  /* contrast accent */
   --color-lightblue: #A4C8F0;
   --color-shadow: #C8E8F8;
+  --base-font-size: 1rem;
 }
 
 /* Reset / base */
@@ -44,7 +45,7 @@ h1 {
 
 h2 { 
   font-weight: 600; 
-  font-size: clamp(1.25rem, 2.5vw, 2rem); 
+  font-size: calc(var(--base-font-size) * 1.5);
 }
 
 a { 

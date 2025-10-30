@@ -30,6 +30,13 @@ body {
   color: var(--color-text);
   background: var(--bg);
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Headings use Poppins for a confident tone */
@@ -92,18 +99,42 @@ p {
   line-height: 1.5; /* H?aving just 1.5 multiplies 1.5 by the current unit of the font. */
 }
 
+
+/* Footer */
+
+footer {
+  margin-top: auto;
+}
+
 /* svg social icons */
 
 .icons {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 2rem;
+}
+
+ul {
+  justify-content: center;
 }
 
 ul svg {
   width: 25px;
   height: 25px;
 }
+
+.social {
+  fill: var(--color-primary);
+}
+
+.social:hover {
+  fill: var(--color-accent);
+}
+
+
 
 /* Layout */
 main { margin-top: 20px; }

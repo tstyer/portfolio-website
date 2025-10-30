@@ -116,10 +116,18 @@ a, h1 strong {
 .nav-menu a { 
   color: var(--color-atags);
   transition: color .5s ease; 
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
 }
 
 .nav-menu a:hover { 
  color: var(--color-accent);
+}
+ /* gives the nav elements a pill on hover */
+.nav-menu a:hover,
+.nav-menu .nav-link.active {
+  background: rgba(47, 187, 170, 0.25);
+  color: #fff;
 }
 
 p {

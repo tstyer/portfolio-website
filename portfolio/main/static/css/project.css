@@ -3,18 +3,26 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  background-color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border-radius: 14px;
   overflow: hidden;
-  max-width: 1200px; /* Adjust based on your preference */
+  max-width: 1200px; /* Adjust based on preference */
   margin: auto;
   padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(47, 187, 170, 0.25);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .project-info {
   flex: 1;
-  padding-right: 20px; /* Adds some space between the text and the carousel */
+  padding-right: 20px; /* adds space between the text and the carousel */
 }
 
 h1,
@@ -27,16 +35,16 @@ p {
   flex: 1;
   display: flex;
   flex-direction: column;
-  position: relative; /* Added to position controls */
-  max-width: 50%; /* Adjust the width of the carousel relative to the card */
-  margin-left: 20px; /* Optional: Adds some space between the info and carousel */
+  position: relative; /* added to position controls */
+  max-width: 50%; /* adjust the width of the carousel relative to the card */
+  margin-left: 20px; /* adds some space between the info and carousel */
 }
 
 .carousel-images {
   display: flex;
-  flex: 1; /* Allows the carousel to fill the space */
+  flex: 1; /* the carousel can fill the space */
   overflow: hidden;
-  position: relative; /* Ensure the images container doesn't overlap controls */
+  position: relative; /* ensure the images container doesn't overlap controls */
 }
 
 /* Carousel Controls */
@@ -49,13 +57,13 @@ p {
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   cursor: pointer;
-  user-select: none; /* Prevent text selection */
+  user-select: none; /* prevent text selection */
   z-index: 10; /* Ensure controls are above the images */
 }
 
 .carousel-control.prev {
   left: 0;
-  border-radius: 3px 0 0 3px; /* Adjusted for consistency */
+  border-radius: 3px 0 0 3px; /* Personal note: possibly adjust later for consistency */
 }
 
 .carousel-control.next {
@@ -83,15 +91,15 @@ p {
 
 .carousel-item {
   display: flex;
-  justify-content: center; /* Center the image horizontally */
-  align-items: center; /* Center the image vertically */
-  background-color: black; /* Fill the background with black */
+  justify-content: center; 
+  align-items: center; 
+  background-color: black;
   width: 100%; /* Full width of the carousel */
-  height: 400px; /* Fixed height, adjust as needed */
+  height: 400px; /* Fixed height */
 }
 
 .carousel-item img {
-  max-height: 100%; /* Limit the image height to fit within the container */
-  max-width: 100%; /* Limit the image width to fit within the container */
+  max-height: 100%; /* Learning note: limit the image height to fit within the container */
+  max-width: 100%; /* Learning note; limit the image width to fit within the container */
   object-fit: contain; /* Maintain aspect ratio and fit the image within the bounds */
 }

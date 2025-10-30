@@ -317,4 +317,31 @@ main {
     text-align: left;
   }
 }
-```
+
+/* for smaller screens */
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px; /* smaller outer padding */
+  }
+
+  .wrapper {
+    padding: 0.5rem;
+  }
+
+  main {
+    margin-top: 1rem;
+  }
+
+  .projects-list {
+    gap: 1rem;
+  }
+
+  /* make sure cards don’t overflow or look too wide */
+  .project-card {
+    max-width: 100%;
+    margin: 0 0 1rem 0;
+    border-radius: 12px;
+  }
+}
+

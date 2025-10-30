@@ -3,14 +3,13 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
   background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   border-radius: 14px;
   overflow: hidden;
   max-width: 1200px; /* Adjust based on preference */
-  margin: auto;
+  margin: 0 auto 1.25rem;
   padding: 20px;
   transition: all 0.3s ease;
 }
@@ -88,12 +87,12 @@ p {
   color: #2FBBAA; /* mint accent */
 }
 
-/* optional: soften paragraph text on hover */
+/* soften paragraph text on hover */
 .project-card:hover p {
   color: rgba(38, 42, 46, 0.8);
 }
 
-/* if the title is a link, tint that too */
+/* title is a link = tint */
 .project-card a {
   transition: color 0.25s ease;
 }

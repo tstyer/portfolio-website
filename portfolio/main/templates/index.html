@@ -27,6 +27,18 @@
     <link rel="icon" type="png" href="../../media/images/fav-icon.png">
 
   </head>
+  <!-- comments modal -->
+<div id="comments-modal" class="comments-modal">
+  <div class="comments-modal__backdrop"></div>
+  <div class="comments-modal__content">
+    <button class="comments-modal__close" type="button">×</button>
+    <div id="comments-modal-body">
+      <!-- comments will go here -->
+      <p>Loading comments…</p>
+    </div>
+  </div>
+</div>
+
   <body class="wrapper">
     <!--NavBar-->
     <nav class="site-nav">
@@ -75,20 +87,22 @@
           class="project-card"
           data-name="Destination Mars"
           data-tags="javascript, testing"
+          data-project-id="{{ project.id|default:1 }} <!--Added to JS knows which comments to call-->
         >
           <h2><a href="project.html">Destination Mars</a></h2>
           <p>Falling-platform JS game with auto-jump and timers.</p>
           <p>Tags: JavaScript, Testing</p>
+          </div>
           <!--Comment trigger button-->
         <button class="comment-btn" type="button">
           💬 Comments
         </button>
-        </div>
 
         <div
           class="project-card"
           data-name="portfolio website"
           data-tags="django, javascript"
+          data-project-id="{{ project.id|default:1 }} <!--Added to JS knows which comments to call-->
         >
           <h2><a href="project.html">Portfolio Website</a></h2>
           <p>Responsive developer portfolio with search and tag filters.</p>

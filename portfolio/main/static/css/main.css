@@ -259,6 +259,69 @@ ul svg {
   fill: var(--H2H3P-Colour);
 }
 
+/* comment modal styling */
+
+/* comments modal */
+.comments-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 1000;
+}
+
+.comments-modal.is-open {
+  display: block;
+}
+
+.comments-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(3px);
+}
+
+.comments-modal__content {
+  position: relative;
+  max-width: 520px;
+  background: #fff;
+  margin: 6vh auto 0;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  padding: 1.25rem 1.25rem 1.5rem;
+  z-index: 1001;
+  text-align: left;
+}
+
+.comments-modal__close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.6rem;
+  border: none;
+  background: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.comment-btn {
+  margin-top: 0.75rem;
+  background: rgba(47, 187, 170, 0.09);
+  border: 1px solid rgba(47, 187, 170, 0.35);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #262A2E;
+  transition: all 0.2s ease;
+}
+
+.comment-btn:hover {
+  background: rgba(47, 187, 170, 0.2);
+}
+
+
 
 /* Layout */
 main { 

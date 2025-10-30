@@ -150,6 +150,58 @@ if (btn && menu) {
   });
 }
 
+// js for the comments model
+
+const modal = document.getElementById("comments-modal");
+const modalBody = document.getElementById("comments-modal-body");
+
+function openCommentsModal(projectId) {
+  if (!modal) return;
+  modal.classList.add("is-open");
+
+  // this will load the comments modal upon clicking
+  fetch(`/projects/${projectId}/comments/partial/`)
+    .then((res) => res.text())
+    .then((html) => {
+      modalBody.innerHTML = html;
+    })
+    .catch(() => {
+      modalBody.innerHTML = "<p>Couldn't load comments.</p>";
+    });
+}
+
+// likewise, this closes it
+function closeCommentsModal() {
+  if (!modal) return;
+  modal.classList.remove("is-open");
+}
+
+// listen for button clicks on each card
+document.querySelectorAll(".project-card .comment-btn").forEach((btn) => {
+  btn.addEventListener("click", function () {
+    const card = this.closest(".project-card");
+    const projectId = card?.dataset?.projectId;
+    if (projectId) {
+      openCommentsModal(projectId);
+    }
+  });
+});
+
+// close button
+const closeBtn = document.querySelector(".comments-modal__close");
+if (closeBtn) {
+  closeBtn.addEventListener("click", closeCommentsModal);
+}
+// click backdrop to close
+if (modal) {
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeCommentsModal();
+    }
+  });
+}
+
+
 // Export for test
 if (typeof module !== "undefined" && module.exports) {
   module.exports = { filterProjects, hideAll, filterByTag };

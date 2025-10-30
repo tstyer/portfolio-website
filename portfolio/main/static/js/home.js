@@ -73,25 +73,40 @@ function clearActiveTags() {
 
 function filterByTag(tag) {
   const t = (tag || "").toLowerCase();
-  let visibleCount = 0;
+  let visibleProjects = [];
 
   projects.forEach((project) => {
     const projectTags = (project.getAttribute("data-tags") || "").toLowerCase();
     const match = projectTags.includes(t);
-    project.style.display = match ? "" : "none";
-    if (match) visibleCount++;
+
+    if (match) {
+      project.style.display = "";
+      visibleProjects.push(project);
+    } else {
+      project.style.display = "none";
+      project.classList.remove("fade-in-up");
+    }
   });
 
-  // also show/hide paragraph when filtering by tag
   const info = document.getElementById("temp-p");
   if (info) {
-    if (visibleCount > 0) {
+    if (visibleProjects.length > 0) {
       info.classList.add("hidden");
     } else {
       info.classList.remove("hidden");
     }
   }
+
+  // staggered wave again
+  visibleProjects.forEach((project, index) => {
+    project.classList.remove("fade-in-up");
+    setTimeout(() => {
+      project.classList.add("fade-in-up");
+      project.style.animationDelay = `${index * 100}ms`;
+    }, 0);
+  });
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // 1) Start hidden

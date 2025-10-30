@@ -107,7 +107,7 @@ a, h1 strong {
   gap: 20px;
   color: azure;
   justify-content: center;
-  background: rgba(47, 187, 170, 0.12); /* very light mint */
+  /*background: rgba(47, 187, 170, 0.12); /* very light mint */ 
   padding: 0.35rem 0.75rem;
   border-radius: 999px; /* pill shape */
   backdrop-filter: blur(4px);
@@ -149,9 +149,9 @@ button {
   align-items: center;
   gap: 1rem;
   padding: 0.75rem 1.5rem;
-  background: rgba(246, 250, 255, 0.4); /* almost transparent, matches page */
+  background: transparent;
   backdrop-filter: blur(6px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  box-shadow: none;
 }
 
 /* hide burger on big screens */

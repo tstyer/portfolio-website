@@ -21,24 +21,45 @@ function toggleInfoParagraph() {
 
 function filterProjects(nameSearchEl, projectEls) {
   const nameQuery = (nameSearchEl?.value || "").toLowerCase();
-  let visibleCount = 0;   
+  let visibleProjects = [];
 
   projectEls.forEach((project) => {
     const name = (project.getAttribute("data-name") || "").toLowerCase();
     const match = name.includes(nameQuery);
-    project.style.display = match ? "" : "none";
-    if (match) visibleCount++;   // 2) count matches
+
+    if (match) {
+      project.style.display = "";
+      visibleProjects.push(project);    // collect only visible projects
+    } else {
+      project.style.display = "none";
+      project.classList.remove("fade-in-up"); // no matches = remove the css class
+    }
   });
 
+  // show/hide info paragraph
   const info = document.getElementById("temp-p");
   if (info) {
-    if (visibleCount > 0) {
+    if (visibleProjects.length > 0) {
       info.classList.add("hidden");
     } else {
       info.classList.remove("hidden");
     }
   }
+
+  // now animate the visible ones
+  visibleProjects.forEach((project, index) => {
+    // remove first so re-adding re-triggers animation
+    project.classList.remove("fade-in-up");
+
+    // small timeout, then add class
+    setTimeout(() => {
+      project.classList.add("fade-in-up");
+      // stagger each item delayed by 100ms
+      project.style.animationDelay = `${index * 100}ms`;
+    }, 0);
+  });
 }
+
 
 // Functions will hide projects when page loads
 function hideAll() {

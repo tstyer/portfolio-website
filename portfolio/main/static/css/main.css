@@ -35,8 +35,9 @@ body {
 }
 
 .wrapper {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
+  padding: 1rem; /* On smaller screens, gets text off edge */
 }
 
 /* Headings use Poppins for a confident tone */
@@ -85,9 +86,11 @@ a, h1 strong {
   display: flex;
   gap: 20px;
   color: azure;
+  justify-content: center;
 }
 
 .nav-menu a { 
+  color: var(--color-primary);
   transition: color .5s ease; 
 }
 
@@ -97,6 +100,24 @@ a, h1 strong {
 
 p {
   line-height: 1.5; /* H?aving just 1.5 multiplies 1.5 by the current unit of the font. */
+}
+
+/* Burger nav */
+
+.site-nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* hide burger on big screens */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
 }
 
 
@@ -140,6 +161,25 @@ ul svg {
 main { margin-top: 20px; }
 
 /* Responsive nav */
-@media (max-width: 768px) {
+@media (max-width: 500px) {
   .nav-menu { flex-direction: column; gap: 10px; }
+}
+
+@media screen and (max-width: 500px) {
+  .nav-menu {
+    flex-direction: column;
+  }
+}
+
+/* below 500px: show burger, hide menu (we'll re-show with JS) */
+@media (max-width: 500px) {
+  .nav-toggle {
+    display: block;
+  }
+  .nav-menu {
+    display: none;
+  }
+  .nav-menu.is-open {
+    display: flex;
+  }
 }

@@ -4,18 +4,19 @@ const tags = document.querySelectorAll(".tag");
 
 function toggleInfoParagraph() {
   const info = document.getElementById("temp-p");
-  // count how many projects are currently visible
   let visibleCount = 0;
-  projects.forEach(p => {
+  projects.forEach((p) => {
     if (p.style.display !== "none") {
       visibleCount++;
     }
   });
 
-  if (visibleCount > 0) {
-    info.classList.add("hidden");
-  } else {
-    info.classList.remove("hidden");
+  if (info) {
+    if (visibleCount > 0) {
+      info.classList.add("hidden");
+    } else {
+      info.classList.remove("hidden");
+    }
   }
 }
 
@@ -29,14 +30,13 @@ function filterProjects(nameSearchEl, projectEls) {
 
     if (match) {
       project.style.display = "";
-      visibleProjects.push(project);    // collect only visible projects
+      visibleProjects.push(project);
     } else {
       project.style.display = "none";
-      project.classList.remove("fade-in-up"); // no matches = remove the css class
+      project.classList.remove("fade-in-up");
     }
   });
 
-  // show/hide info paragraph
   const info = document.getElementById("temp-p");
   if (info) {
     if (visibleProjects.length > 0) {
@@ -46,22 +46,15 @@ function filterProjects(nameSearchEl, projectEls) {
     }
   }
 
-  // now animate the visible ones
   visibleProjects.forEach((project, index) => {
-    // remove first so re-adding re-triggers animation
     project.classList.remove("fade-in-up");
-
-    // small timeout, then add class
     setTimeout(() => {
       project.classList.add("fade-in-up");
-      // stagger each item delayed by 100ms
       project.style.animationDelay = `${index * 100}ms`;
     }, 0);
   });
 }
 
-
-// Functions will hide projects when page loads
 function hideAll() {
   projects.forEach((p) => {
     p.style.display = "none";
@@ -71,9 +64,10 @@ function hideAll() {
   toggleInfoParagraph();
 }
 
-
 function clearActiveTags() {
-  document.querySelectorAll(".tag.active").forEach((t) => t.classList.remove("active"));
+  document
+    .querySelectorAll(".tag.active")
+    .forEach((t) => t.classList.remove("active"));
 }
 
 function filterByTag(tag) {
@@ -102,7 +96,6 @@ function filterByTag(tag) {
     }
   }
 
-  // staggered wave again
   visibleProjects.forEach((project, index) => {
     project.classList.remove("fade-in-up");
     setTimeout(() => {
@@ -112,28 +105,23 @@ function filterByTag(tag) {
   });
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
-  // 1) Start hidden
   hideAll();
 
-  // 2) Typing: clear active tag(s) and use the tested function
   if (nameSearch) {
     nameSearch.addEventListener("input", () => {
       clearActiveTags();
       filterProjects(nameSearch, projects);
-      // If the box is empty, keep everything hidden
       if (!nameSearch.value.trim()) hideAll();
     });
   }
 
-  // 3) Tag clicks: set active, clear search, filter by tag
   if (tags.length) {
     tags.forEach((tagBtn) => {
       tagBtn.addEventListener("click", function () {
         clearActiveTags();
         this.classList.add("active");
-        if (nameSearch) nameSearch.value = ""; // ensure tag filter is applied
+        if (nameSearch) nameSearch.value = "";
         filterByTag(this.dataset.tag || "");
       });
     });
@@ -141,17 +129,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Navigation bar collapse
-const btn = document.querySelector('.nav-toggle');
-const menu = document.querySelector('.nav-menu');
+const btn = document.querySelector(".nav-toggle");
+const menu = document.querySelector(".nav-menu");
 
 if (btn && menu) {
-  btn.addEventListener('click', () => {
-    menu.classList.toggle('is-open');
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("is-open");
   });
 }
 
-// js for the comments model
-
+// COMMENTS MODAL
 const modal = document.getElementById("comments-modal");
 const modalBody = document.getElementById("comments-modal-body");
 
@@ -159,8 +146,7 @@ function openCommentsModal(projectId) {
   if (!modal) return;
   modal.classList.add("is-open");
 
-  // this will load the comments modal upon clicking
-  fetch(`/projects/${projectId}/comments/partial/`)
+  fetch(`/project/${projectId}/comments/partial/`)
     .then((res) => res.text())
     .then((html) => {
       modalBody.innerHTML = html;
@@ -170,13 +156,11 @@ function openCommentsModal(projectId) {
     });
 }
 
-// likewise, this closes it
 function closeCommentsModal() {
   if (!modal) return;
   modal.classList.remove("is-open");
 }
 
-// listen for button clicks on each card
 document.querySelectorAll(".project-card .comment-btn").forEach((btn) => {
   btn.addEventListener("click", function () {
     const card = this.closest(".project-card");
@@ -187,20 +171,82 @@ document.querySelectorAll(".project-card .comment-btn").forEach((btn) => {
   });
 });
 
-// close button
 const closeBtn = document.querySelector(".comments-modal__close");
 if (closeBtn) {
   closeBtn.addEventListener("click", closeCommentsModal);
 }
-// click backdrop to close
-if (modal) {
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      closeCommentsModal();
+
+// close when clicking real backdrop
+const commentsBackdrop = document.querySelector(".comments-modal__backdrop");
+if (commentsBackdrop) {
+  commentsBackdrop.addEventListener("click", closeCommentsModal);
+}
+
+// AUTH MODAL
+const authModal = document.getElementById("auth-modal");
+const openAuthBtn = document.getElementById("open-auth-modal");
+const closeAuthBtn = document.querySelector(".auth-modal__close");
+const authBackdrop = document.querySelector(".auth-modal__backdrop");
+const switchToRegister = document.getElementById("switch-to-register");
+const authTitle = authModal ? authModal.querySelector(".auth-title") : null;
+const authSub = authModal ? authModal.querySelector(".auth-sub") : null;
+const authModeInput = document.getElementById("auth-mode");
+
+if (openAuthBtn && authModal) {
+  openAuthBtn.addEventListener("click", () => {
+    authModal.classList.add("is-open");
+  });
+}
+
+function closeAuth() {
+  if (authModal) authModal.classList.remove("is-open");
+}
+
+if (closeAuthBtn) closeAuthBtn.addEventListener("click", closeAuth);
+if (authBackdrop) authBackdrop.addEventListener("click", closeAuth);
+
+if (switchToRegister) {
+  switchToRegister.addEventListener("click", () => {
+    if (authModeInput.value === "login") {
+      authModeInput.value = "register";
+      if (authTitle) authTitle.textContent = "Create an account";
+      if (authSub) authSub.textContent = "Register to leave comments.";
+      switchToRegister.textContent = "I already have an account";
+    } else {
+      authModeInput.value = "login";
+      if (authTitle) authTitle.textContent = "Welcome back";
+      if (authSub) authSub.textContent = "Sign in to leave a comment.";
+      switchToRegister.textContent = "Create an account";
     }
   });
 }
 
+// always attach submit handler
+const authForm = document.getElementById("auth-form");
+if (authForm) {
+  authForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(authForm);
+    const mode = formData.get("mode");
+
+    fetch(`/auth/${mode}/`, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          closeAuth();
+        } else {
+          alert(data.error || "Could not complete request.");
+        }
+      })
+      .catch(() => alert("Network error"));
+  });
+}
 
 // Export for test
 if (typeof module !== "undefined" && module.exports) {

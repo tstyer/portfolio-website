@@ -27,7 +27,10 @@
     <link rel="icon" type="png" href="../../media/images/fav-icon.png">
 
   </head>
-  <!-- comments modal -->
+
+  <body class="wrapper">
+
+     <!-- comments modal -->
 <div id="comments-modal" class="comments-modal">
   <div class="comments-modal__backdrop"></div>
   <div class="comments-modal__content">
@@ -39,7 +42,6 @@
   </div>
 </div>
 
-  <body class="wrapper">
     <!--NavBar-->
     <nav class="site-nav">
       <button class="nav-toggle" aria-label="Toggle navigation">
@@ -56,6 +58,10 @@
           <a class="nav-link" href="about.html">About Me</a>
         </li>
       </ul>
+      <!--Authorise button-->
+      <button type="button" class="auth-btn" id="open-auth-modal">
+    Sign in / Register
+  </button
     </nav>
 
      <!-- Page header -->
@@ -87,31 +93,29 @@
           class="project-card"
           data-name="Destination Mars"
           data-tags="javascript, testing"
-          data-project-id="{{ project.id|default:1 }} <!--Added to JS knows which comments to call-->
-        >
+          data-project-id="{{ project.id|default:1 }}> <!--Added to JS knows which comments to call-->
           <h2><a href="project.html">Destination Mars</a></h2>
           <p>Falling-platform JS game with auto-jump and timers.</p>
           <p>Tags: JavaScript, Testing</p>
-          </div>
-          <!--Comment trigger button-->
+           <!--Comment trigger button-->
         <button class="comment-btn" type="button">
           💬 Comments
         </button>
-
+          </div>
+         
         <div
           class="project-card"
           data-name="portfolio website"
           data-tags="django, javascript"
-          data-project-id="{{ project.id|default:1 }} <!--Added to JS knows which comments to call-->
-        >
+          data-project-id="{{ project.id|default:1 }}> <!--Added to JS knows which comments to call-->
           <h2><a href="project.html">Portfolio Website</a></h2>
           <p>Responsive developer portfolio with search and tag filters.</p>
           <p>Tags: Django, JavaScript</p>
-        </div>
-        <!--Comment trigger button-->
+          <!--Comment trigger button-->
         <button class="comment-btn" type="button">
           💬 Comments
         </button>
+        </div>
       </section>
 
       <p id="temp-p">Select a tag or type in the search field to filter projects.</p>
@@ -137,7 +141,7 @@
             target="_blank"
             rel="noopener"
             alt="LinkedIn Social Icon"
-            ><a><svg class="social" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            ><svg class="social" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
               <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
               <path
                 d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z"/></svg></a>
@@ -145,6 +149,37 @@
       </ul>
 
     </footer>
+
+
+    <!-- authorisation modal -->
+<div id="auth-modal" class="auth-modal">
+  <div class="auth-modal__backdrop"></div>
+  <div class="auth-modal__content">
+    <button class="auth-modal__close" type="button">×</button>
+    <h2 class="auth-title">Welcome back</h2>
+    <p class="auth-sub">Sign in to leave a comment.</p>
+
+    <form id="auth-form">
+      <label for="auth-email">Email</label>
+      <input type="email" id="auth-email" name="email" required>
+
+      <label for="auth-password">Password</label>
+      <input type="password" id="auth-password" name="password" required>
+
+      <!-- toggle: are they registering or signing in -->
+      <input type="hidden" id="auth-mode" name="mode" value="login">
+
+      <button type="submit" class="auth-primary">Continue</button>
+    </form>
+
+    <p class="auth-switch">
+      New here?
+      <button type="button" id="switch-to-register">Create an account</button>
+    </p>
+  </div>
+</div>
+
+
     <!-- JS -->
     <script src="../static/js/home.js" defer></script>
 

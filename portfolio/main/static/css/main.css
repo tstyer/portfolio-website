@@ -343,5 +343,32 @@ main {
     margin: 0 0 1rem 0;
     border-radius: 12px;
   }
+
+  /* for the header and text */
+
+  header {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  header h2 {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+  }
+
+  header h1 {
+    font-size: clamp(1.9rem, 7vw, 2.35rem);
+  }
+
+  .tag-line {
+    max-width: 30rem;
+    margin: 0.35rem auto 0.75rem;
+  }
+
+  .tag-line p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: rgba(38, 42, 46, 0.75);
+  }
 }
 

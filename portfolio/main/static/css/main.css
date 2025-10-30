@@ -5,7 +5,7 @@
   --font-header: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --color-bg: #F6FAFF;
-  --color-text: #333333;
+  --color-text: #262A2E;
   --color-accent: #6C63FF; /* colour accent */
   --color-atags: #4EE0CB;  /* main colour */
   --color-lightblue: #A4C8F0;
@@ -18,7 +18,8 @@
 /* Reset / base */
 * { 
   box-sizing: border-box; 
-  margin: 0; padding: 0; 
+  margin: 0; 
+  padding: 0; 
 }
 
 html, body { 
@@ -29,10 +30,12 @@ body {
   font-family: var(--font-body);
   line-height: 1.7;
   color: var(--color-text);
-  background: linear-gradient(135deg,
-  #E7D6FF 0%,
-  #E4F8F2 45%,
-  #F6FAFF 100%))
+  background: linear-gradient(
+    135deg,
+    #E7D6FF 0%,
+    #E4F8F2 45%,
+    #F6FAFF 100%
+  );
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -61,7 +64,7 @@ h2 {
   font-weight: 600; 
   font-size: calc(var(--base-font-size));
   letter-spacing: 0.25em;
-  color: #2FBBAA;
+  color: #249988;
 }
 
 
@@ -95,19 +98,20 @@ a {
   text-decoration: none; 
   font-family: var(--font-body);
   color: var(--color-atags);
+  transition: color 0.25s ease;
 }
 
 a, h1 strong {
   color: var(--color-atags);
 }
 
+/* desktop nav */
 .nav-menu {
   list-style: none;
   display: flex;
   gap: 20px;
   color: azure;
   justify-content: center;
-  /*background: rgba(47, 187, 170, 0.12); /* very light mint */ 
   padding: 0.35rem 0.75rem;
   border-radius: 999px; /* pill shape */
   backdrop-filter: blur(4px);
@@ -115,18 +119,20 @@ a, h1 strong {
 
 .nav-menu a { 
   color: var(--color-atags);
-  transition: color .5s ease; 
+  transition: background 0.25s ease, color 0.25s ease;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
 }
 
+/* mint hover, lighter than before */
 .nav-menu a:hover { 
- color: var(--color-accent);
+  background: rgba(47, 187, 170, 0.15);
+  color: #fff;
 }
- /* gives the nav elements a pill on hover */
-.nav-menu a:hover,
+
+/* gives the nav elements a pill on hover */
 .nav-menu .nav-link.active {
-  background: rgba(47, 187, 170, 0.25);
+  background: rgba(47, 187, 170, 0.6);
   color: #fff;
 }
 
@@ -162,6 +168,31 @@ a, h1 strong {
 p {
   line-height: 1.5; /* H?aving just 1.5 multiplies 1.5 by the current unit of the font. */
   font-size: 0.95rem;
+}
+
+/* Filter tags (outline style to stop competing with the h1) */
+.tag {
+  background-color: transparent;
+  color: var(--color-text);
+  border: 1.5px solid rgba(47, 187, 170, 0.4);
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: none;
+}
+
+.tag:hover {
+  background-color: rgba(47, 187, 170, 0.12);
+  box-shadow: 0 0 10px rgba(47, 187, 170, 0.35);
+  transform: scale(1.02);
+}
+
+/* active tag (clicked) */
+.tag.active {
+  background-color: rgba(47, 187, 170, 0.25);
+  color: #262A2E;
+  border-color: rgba(47, 187, 170, 0.7);
 }
 
 /* Burger nav */
@@ -229,13 +260,17 @@ ul svg {
 }
 
 
-
 /* Layout */
-main { margin-top: 20px; }
+main { 
+  margin-top: 20px; 
+}
 
 /* Responsive nav */
 @media (max-width: 500px) {
-  .nav-menu { flex-direction: column; gap: 10px; }
+  .nav-menu { 
+    flex-direction: column; 
+    gap: 10px; 
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -244,7 +279,7 @@ main { margin-top: 20px; }
   }
 }
 
-/* below 500px: show burger, hide menu (we'll re-show with JS) */
+/* below 500px: show burger, hide menu (will re-show with JS) */
 @media (max-width: 500px) {
   .nav-toggle {
     display: block;
@@ -259,7 +294,7 @@ main { margin-top: 20px; }
 
 /* mobile styles */
 @media (max-width: 500px) {
-   .nav-toggle {
+  .nav-toggle {
     display: block;
   }
 
@@ -281,3 +316,5 @@ main { margin-top: 20px; }
   .nav-menu li a {
     text-align: left;
   }
+}
+```

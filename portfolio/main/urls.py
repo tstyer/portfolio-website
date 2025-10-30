@@ -5,8 +5,11 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("contact/", views.contact, name="contact"),
 
-    # Project detail (uses your existing view name 'project')
+    # Project detail (uses existing view name 'project')
     path("project/<int:id>/", views.project, name="project"),
+
+    # partial comments for modal on home page
+    path("project/<int:id>/comments/partial/", views.project_comments_partial, name="project_comments_partial"),
 
     # CRUD for comments
     path("project/<int:id>/comments/create/", views.comment_create, name="comment_create"),

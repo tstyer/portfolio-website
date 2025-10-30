@@ -63,9 +63,14 @@ function filterProjects(nameSearchEl, projectEls) {
 
 // Functions will hide projects when page loads
 function hideAll() {
-  projects.forEach((p) => (p.style.display = "none"));
-  toggleInfoParagraph();     // 3) keep paragraph visible when all hidden
+  projects.forEach((p) => {
+    p.style.display = "none";
+    p.classList.remove("fade-in-up");
+    p.style.animationDelay = "0ms";
+  });
+  toggleInfoParagraph();
 }
+
 
 function clearActiveTags() {
   document.querySelectorAll(".tag.active").forEach((t) => t.classList.remove("active"));

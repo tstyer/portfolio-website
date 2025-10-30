@@ -5,7 +5,7 @@
   --color-bg: #F6FAFF;
   --color-text: #333333;
   --color-accent: #6C63FF; /* colour accent */
-  --color-primary: #4EE0CB;  /* main colour */
+  --color-atags: #4EE0CB;  /* Link colours */
   --color-lightblue: #A4C8F0;
   --color-shadow: #C8E8F8;
   --base-font-size: 1rem;
@@ -34,10 +34,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
 }
 
 .tag {
-  background-color: #007bff;
+  background-color: var(--H1-Colour);
   color: white;
   border: none;
   padding: 5px 10px;
@@ -54,8 +55,8 @@
 /* Paragraph under tags */
 
 #temp-p {
-  color: var(--color-primary);
-  font-family: var(--H2H3P-Colour);
+  color: var(--H2H3P-Colour);
+  font-family: var(--font-body);
 }
 
 /* Projects list */

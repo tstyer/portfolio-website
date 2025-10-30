@@ -2,17 +2,48 @@ const nameSearch = document.getElementById("name-search");
 const projects = document.querySelectorAll(".project");
 const tags = document.querySelectorAll(".tag");
 
+function toggleInfoParagraph() {
+  const info = document.getElementById("temp-p");
+  // count how many projects are currently visible
+  let visibleCount = 0;
+  projects.forEach(p => {
+    if (p.style.display !== "none") {
+      visibleCount++;
+    }
+  });
+
+  if (visibleCount > 0) {
+    info.classList.add("hidden");
+  } else {
+    info.classList.remove("hidden");
+  }
+}
+
 function filterProjects(nameSearchEl, projectEls) {
   const nameQuery = (nameSearchEl?.value || "").toLowerCase();
+  let visibleCount = 0;   
+
   projectEls.forEach((project) => {
     const name = (project.getAttribute("data-name") || "").toLowerCase();
-    project.style.display = name.includes(nameQuery) ? "" : "none";
+    const match = name.includes(nameQuery);
+    project.style.display = match ? "" : "none";
+    if (match) visibleCount++;   // 2) count matches
   });
+
+  const info = document.getElementById("temp-p");
+  if (info) {
+    if (visibleCount > 0) {
+      info.classList.add("hidden");
+    } else {
+      info.classList.remove("hidden");
+    }
+  }
 }
 
 // Functions will hide projects when page loads
 function hideAll() {
   projects.forEach((p) => (p.style.display = "none"));
+  toggleInfoParagraph();     // 3) keep paragraph visible when all hidden
 }
 
 function clearActiveTags() {
@@ -21,10 +52,24 @@ function clearActiveTags() {
 
 function filterByTag(tag) {
   const t = (tag || "").toLowerCase();
+  let visibleCount = 0;
+
   projects.forEach((project) => {
     const projectTags = (project.getAttribute("data-tags") || "").toLowerCase();
-    project.style.display = projectTags.includes(t) ? "" : "none";
+    const match = projectTags.includes(t);
+    project.style.display = match ? "" : "none";
+    if (match) visibleCount++;
   });
+
+  // also show/hide paragraph when filtering by tag
+  const info = document.getElementById("temp-p");
+  if (info) {
+    if (visibleCount > 0) {
+      info.classList.add("hidden");
+    } else {
+      info.classList.remove("hidden");
+    }
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -55,13 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Navigation bar collapse
-
 const btn = document.querySelector('.nav-toggle');
 const menu = document.querySelector('.nav-menu');
 
-btn.addEventListener('click', () => {
-  menu.classList.toggle('is-open');
-});
+if (btn && menu) {
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('is-open');
+  });
+}
 
 // Export for test
 if (typeof module !== "undefined" && module.exports) {

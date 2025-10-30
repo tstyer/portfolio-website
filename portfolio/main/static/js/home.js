@@ -107,7 +107,7 @@ function filterByTag(tag) {
     project.classList.remove("fade-in-up");
     setTimeout(() => {
       project.classList.add("fade-in-up");
-      project.style.animationDelay = `${index * 100}ms`;
+      project.style.animationDelay = `${index * 150}ms`;
     }, 0);
   });
 }

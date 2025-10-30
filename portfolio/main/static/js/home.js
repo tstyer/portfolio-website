@@ -1,5 +1,5 @@
 const nameSearch = document.getElementById("name-search");
-const projects = document.querySelectorAll(".project");
+const projects = document.querySelectorAll(".project-card");
 const tags = document.querySelectorAll(".tag");
 
 function toggleInfoParagraph() {

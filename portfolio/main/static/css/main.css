@@ -130,6 +130,17 @@ a, h1 strong {
   color: #fff;
 }
 
+/* Tagline */
+
+.tag-line {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--H2H3P-Colour);
+  margin-top: 0.5rem;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
 p {
   line-height: 1.5; /* H?aving just 1.5 multiplies 1.5 by the current unit of the font. */
 }

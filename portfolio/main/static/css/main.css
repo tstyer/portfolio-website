@@ -64,9 +64,32 @@ h2 {
   color: #2FBBAA;
 }
 
+
+/* Called by JS */
+
 .hidden {
   display: none;
 }
+
+/* fade and slide up of projects */
+@keyframes fade-in-up {
+  from {
+    opacity: 0; /* starts invisible */
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1; /* fully visible */
+    transform: translateY(0);
+  }
+}
+
+/* base class I will add from JS - it uses this when tag clicked or search made */
+.fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+/* ABOVE: Called by JS */
+
 
 a { 
   text-decoration: none; 

@@ -7,6 +7,14 @@ from django.views.decorators.http import require_POST
 from .models import Project, Tag, Comment
 from .forms import CommentForm
 
+import gspread 
+from django.conf import settings
+from datetime import datetime
+
+import json
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
 # Create your views here.
 
 def home(request):

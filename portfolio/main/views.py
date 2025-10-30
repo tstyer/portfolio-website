@@ -36,6 +36,25 @@ def project(request, id):
         },
     )
 
+# small partial view so the home page modal can load comments for a single project
+def project_comments_partial(request, id):
+    """
+    Render just the comments + (optional) form for a specific project.
+    Used by the home page popup.
+    """
+    project_obj = get_object_or_404(Project, pk=id)
+    comments = project_obj.comments.select_related("user").order_by("-created_at")
+    form = CommentForm() if request.user.is_authenticated else None
+    return render(
+        request,
+        "partials/project_comments.html",
+        {
+            "project": project_obj,
+            "comments": comments,
+            "form": form,
+        },
+    )
+
 # Below is the ability to add comments to satisfy CRUD.
 
 @login_required

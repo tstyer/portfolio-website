@@ -252,11 +252,11 @@ ul svg {
 }
 
 .social {
-  fill: var(--color-atags);
+  fill: var(--H1-Colour);
 }
 
 .social:hover {
-  fill: var(--color-accent);
+  fill: var(--H2H3P-Colour);
 }
 
 

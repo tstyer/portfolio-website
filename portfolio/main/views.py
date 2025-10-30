@@ -116,6 +116,101 @@ def comment_delete(request, id, comment_id):
 
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
+
+def get_users_sheet():
+    """
+    Returns the Google Sheet worksheet that stores users.
+    Assumes credentials already set up on settings side.
+    """
+    gc = gspread.service_account(filename=settings.GOOGLE_SERVICE_ACCOUNT_FILE)
+    sh = gc.open_by_key(settings.GOOGLE_SHEET_ID)   # set this in settings
+    ws = sh.worksheet("user")  # or whatever the tab is called
+    return ws
+
+@require_POST
+def auth_register(request):
+    """
+    Registers a user in the Google Sheet.
+    Expected fields: email, password, username
+    """
+    email = request.POST.get("email", "").strip().lower()
+    password = request.POST.get("password", "").strip()
+    username = request.POST.get("username", "").strip()
+
+    if not email or not password or not username:
+      return JsonResponse({"success": False, "error": "All fields required."}, status=400)
+
+    try:
+        ws = get_users_sheet()
+    except Exception as e:
+        return JsonResponse({"success": False, "error": f"Sheet error: {e}"}, status=500)
+
+    # read all emails in sheet
+    try:
+        records = ws.get_all_records()
+    except Exception as e:
+        return JsonResponse({"success": False, "error": f"Read error: {e}"}, status=500)
+
+    # check if email already exists
+    for row in records:
+        if row.get("Email", "").strip().lower() == email:
+            return JsonResponse({"success": False, "error": "Email already registered."}, status=400)
+
+    # write new row
+    now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        ws.append_row([username, email, now_str, "", ""])  # matches columns in screenshot
+    except Exception as e:
+        return JsonResponse({"success": False, "error": f"Write error: {e}"}, status=500)
+
+    # in real life we'd hash the password. for now: write to a hidden sheet or store in col?
+    # if the sheet has a Password column, do this instead:
+    # ws.append_row([username, email, now_str, "", "", password])
+
+    # mark session-like value in Django
+    request.session["user_email"] = email
+    request.session["user_name"] = username
+
+    return JsonResponse({"success": True, "username": username})
+
+
+@require_POST
+def auth_login(request):
+    """
+    Logs a user in by checking email + password against Google Sheet.
+    """
+    email = request.POST.get("email", "").strip().lower()
+    password = request.POST.get("password", "").strip()
+
+    if not email or not password:
+        return JsonResponse({"success": False, "error": "Email and password required."}, status=400)
+
+    try:
+        ws = get_users_sheet()
+        records = ws.get_all_records()
+    except Exception as e:
+        return JsonResponse({"success": False, "error": f"Sheet error: {e}"}, status=500)
+
+    matched = None
+    for row in records:
+        row_email = row.get("Email", "").strip().lower()
+        row_pass = row.get("Password", "").strip() if "Password" in row else ""
+        if row_email == email and row_pass == password:
+            matched = row
+            break
+
+    if not matched:
+        return JsonResponse({"success": False, "error": "Invalid credentials."}, status=401)
+
+    # set session
+    request.session["user_email"] = matched.get("Email")
+    request.session["user_name"] = matched.get("User Name") or matched.get("Username") or "Guest"
+
+    return JsonResponse({
+        "success": True,
+        "username": request.session["user_name"],
+    })
+
 # Self-learn note:
 #  Views are functions called when wanting to display a page.
 #  You need to import models to do so.

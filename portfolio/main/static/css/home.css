@@ -44,11 +44,13 @@
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color ease 0.3s;
 }
 
 .tag:hover {
-  background-color: #0056b3;
+  background-color: var(--H2H3P-Colour);  
+  box-shadow: 0 0 10px rgba(47, 187, 170, 0.6); /* I did this for a glow effect */
+  transform: scale(1.02); 
 }
 
 

@@ -28,9 +28,11 @@ html, body {
 body {
   font-family: var(--font-body);
   line-height: 1.7;
-  background-color: var(--color-bg);
   color: var(--color-text);
-  background: var(--bg);
+  background: linear-gradient(135deg,
+  #E7D6FF 0%,
+  #E4F8F2 45%,
+  #F6FAFF 100%))
   padding: 20px;
   display: flex;
   flex-direction: column;

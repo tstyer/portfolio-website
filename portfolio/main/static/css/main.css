@@ -97,10 +97,6 @@ a {
   color: var(--color-atags);
 }
 
-a:hover { 
-  text-decoration: underline; 
-}
-
 a, h1 strong {
   color: var(--color-atags);
 }
@@ -111,6 +107,10 @@ a, h1 strong {
   gap: 20px;
   color: azure;
   justify-content: center;
+  background: rgba(47, 187, 170, 0.12); /* very light mint */
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px; /* pill shape */
+  backdrop-filter: blur(4px);
 }
 
 .nav-menu a { 
@@ -133,11 +133,17 @@ button {
 }
 
 .site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
-  position: relative;
+  padding: 0.75rem 1.5rem;
+  background: rgba(246, 250, 255, 0.4); /* almost transparent, matches page */
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 /* hide burger on big screens */

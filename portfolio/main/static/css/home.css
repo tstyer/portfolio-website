@@ -9,6 +9,8 @@
   --color-lightblue: #A4C8F0;
   --color-shadow: #C8E8F8;
   --base-font-size: 1rem;
+  --H2H3P-Colour: #2FBBAA;
+  --H1-Colour: #5B55E0;
 }
 
 /* Heading */
@@ -53,7 +55,7 @@
 
 #temp-p {
   color: var(--color-primary);
-  font-family: var(--font-body);
+  font-family: var(--H2H3P-Colour);
 }
 
 /* Projects list */

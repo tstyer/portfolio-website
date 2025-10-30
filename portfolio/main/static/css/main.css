@@ -7,10 +7,12 @@
   --color-bg: #F6FAFF;
   --color-text: #333333;
   --color-accent: #6C63FF; /* colour accent */
-  --color-primary: #4EE0CB;  /* main colour */
+  --color-atags: #4EE0CB;  /* main colour */
   --color-lightblue: #A4C8F0;
   --color-shadow: #C8E8F8;
   --base-font-size: 1rem;
+  --H2H3P-Colour: #2FBBAA;
+  --H1-Colour: #5B55E0;
 }
 
 /* Reset / base */
@@ -50,20 +52,20 @@ h1, h2, h3 {
 h1 { 
   font-weight: 700; 
   font-size: clamp(2rem, 4.5vw, 3rem); 
-  color: var(--color-accent);
+  color: var(--H1-Colour);
 }
 
 h2 { 
   font-weight: 600; 
   font-size: calc(var(--base-font-size));
   letter-spacing: 0.25em;
-  color: var(--color-accent);
+  color: #2FBBAA;
 }
 
 a { 
   text-decoration: none; 
   font-family: var(--font-body);
-  color: var(--color-primary);
+  color: var(--color-atags);
 }
 
 a:hover { 
@@ -71,16 +73,8 @@ a:hover {
 }
 
 a, h1 strong {
-  color: var(--color-primary);
+  color: var(--color-atags);
 }
-
-/* Header & nav */ /* Comment out for time being */
-/*header {
-  background: var(--brand);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 8px;
-}*/
 
 .nav-menu {
   list-style: none;
@@ -91,7 +85,7 @@ a, h1 strong {
 }
 
 .nav-menu a { 
-  color: var(--color-primary);
+  color: var(--color-atags);
   transition: color .5s ease; 
 }
 
@@ -154,7 +148,7 @@ ul svg {
 }
 
 .social {
-  fill: var(--color-primary);
+  fill: var(--color-atags);
 }
 
 .social:hover {
@@ -209,4 +203,8 @@ main { margin-top: 20px; }
     padding: 0.75rem 1rem;
     box-shadow: 0 8px 20px rgba(0,0,0,.08);
     z-index: 100;
+  }
+
+  .nav-menu li a {
+    text-align: left;
   }

@@ -134,15 +134,34 @@ a, h1 strong {
 
 .tag-line {
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--H2H3P-Colour);
   margin-top: 0.5rem;
   letter-spacing: 0.02em;
   font-weight: 400;
 }
 
+@keyframes fade-in { /* Used this to add a soft intro to tagline */
+  from { 
+    opacity: 0; 
+    transform: translateY(6px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.tagline {
+  animation: fade-in 0.8s ease-out 0.3s forwards;
+  opacity: 0; /* start hidden, animation reveals it */
+}
+
+/* p's on any page */
+
 p {
   line-height: 1.5; /* H?aving just 1.5 multiplies 1.5 by the current unit of the font. */
+  font-size: 0.95rem;
 }
 
 /* Burger nav */

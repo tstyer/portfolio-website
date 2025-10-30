@@ -32,6 +32,7 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .wrapper {
@@ -104,11 +105,16 @@ p {
 
 /* Burger nav */
 
+button {
+  color: var(--color-primary);
+}
+
 .site-nav {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
+  position: relative;
 }
 
 /* hide burger on big screens */
@@ -183,3 +189,24 @@ main { margin-top: 20px; }
     display: flex;
   }
 }
+
+/* mobile styles */
+@media (max-width: 500px) {
+   .nav-toggle {
+    display: block;
+  }
+
+  /* hide menu by default */
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+    position: absolute;   /* take it out of the doc flow */
+    top: 100%;            /* right below the nav bar */
+    left: 0;
+    background: rgba(255, 255, 255, 0.93); /* semi-transparent */
+    padding: 0.75rem 1rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    z-index: 100;
+  }

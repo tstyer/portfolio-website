@@ -1,3 +1,16 @@
+/* Typography (Google fonts loaded in <head>) */
+:root{
+  --font-header: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --color-bg: #F6FAFF;
+  --color-text: #333333;
+  --color-accent: #6C63FF; /* colour accent */
+  --color-primary: #4EE0CB;  /* main colour */
+  --color-lightblue: #A4C8F0;
+  --color-shadow: #C8E8F8;
+  --base-font-size: 1rem;
+}
+
 /* Heading */
 
 
@@ -33,6 +46,14 @@
 
 .tag:hover {
   background-color: #0056b3;
+}
+
+
+/* Paragraph under tags */
+
+#temp-p {
+  color: var(--color-primary);
+  font-family: var(--font-body);
 }
 
 /* Projects list */

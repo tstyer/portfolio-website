@@ -54,6 +54,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Navigation bar collapse
+
+const btn = document.querySelector('.nav-toggle');
+const menu = document.querySelector('.nav-menu');
+
+btn.addEventListener('click', () => {
+  menu.classList.toggle('is-open');
+});
+
 // Export for test
 if (typeof module !== "undefined" && module.exports) {
   module.exports = { filterProjects, hideAll, filterByTag };

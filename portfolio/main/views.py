@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -214,11 +215,13 @@ def auth_register(request):
                 {"success": False, "error": "Email already registered."},
                 status=400,
             )
+        
+    hashed_password = make_password(password)
 
     # build row in same order as header
     now = timezone.localtime(timezone.now())   # UK time
     now_str = now.strftime("%Y-%m-%d %H:%M:%S")
-    new_row = [username, email, now_str, password]
+    new_row = [username, email, now_str, hashed_password]
 
     # write to sheet
     try:
@@ -251,7 +254,9 @@ def auth_login(request):
 
     try:
         ws = get_users_sheet()
-        records = ws.get_all_records()
+        records = ws.get_all_records(
+            expected_headers=["User Name", "Email", "Date Joined", "Password"]
+        )
     except Exception as e:
         return JsonResponse({"success": False, "error": f"Sheet error: {e}"}, status=500)
 
@@ -259,16 +264,18 @@ def auth_login(request):
     for row in records:
         row_email = row.get("Email", "").strip().lower()
         row_pass = row.get("Password", "").strip() if "Password" in row else ""
-        if row_email == email and row_pass == password:
-            matched = row
-            break
+        if row_email == email:
+            # check hashed password
+            if check_password(password, row_pass):
+                matched = row
+                break
 
     if not matched:
         return JsonResponse(
             {"success": False, "error": "Invalid credentials."}, status=401
         )
 
-    # set session for later use on comments
+    # set session for comment posting
     request.session["user_email"] = matched.get("Email")
     request.session["user_name"] = (
         matched.get("User Name") or matched.get("Username") or "Guest"

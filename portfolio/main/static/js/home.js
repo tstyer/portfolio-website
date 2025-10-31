@@ -198,6 +198,8 @@ const switchToRegister = document.getElementById("switch-to-register");
 const authTitle = authModal ? authModal.querySelector(".auth-title") : null;
 const authSub = authModal ? authModal.querySelector(".auth-sub") : null;
 const authModeInput = document.getElementById("auth-mode");
+const authUsernameWrap = document.getElementById("auth-username-wrap");
+
 
 // this is the badge that will show "Hi, Travis"
 const userBadge = document.getElementById("user-badge");
@@ -229,15 +231,19 @@ if (authBackdrop) authBackdrop.addEventListener("click", closeAuth);
 if (switchToRegister) {
   switchToRegister.addEventListener("click", () => {
     if (authModeInput.value === "login") {
+      // switch to register
       authModeInput.value = "register";
       if (authTitle) authTitle.textContent = "Create an account";
       if (authSub) authSub.textContent = "Register to leave comments.";
       switchToRegister.textContent = "I already have an account";
+      if (authUsernameWrap) authUsernameWrap.style.display = "block";
     } else {
+      // switch to login
       authModeInput.value = "login";
       if (authTitle) authTitle.textContent = "Welcome back";
       if (authSub) authSub.textContent = "Sign in to leave a comment.";
       switchToRegister.textContent = "Create an account";
+      if (authUsernameWrap) authUsernameWrap.style.display = "none";
     }
   });
 }

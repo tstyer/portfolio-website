@@ -77,23 +77,43 @@ def project_comments_partial(request, id):
 
 # Below is the ability to add comments to satisfy CRUD.
 
-@login_required
 @require_POST
 def comment_create(request, id):
     """
     Create a new comment on a project.
+    Accepts:
+    - Django authenticated users
+    - Sheet/session users (email + name stored in session)
     """
     project_obj = get_object_or_404(Project, pk=id)
+
+    # detect auth method
+    is_django_user = request.user.is_authenticated
+    sheet_email = request.session.get("user_email")
+    sheet_name = request.session.get("user_name")
+
+    # block if neither is present
+    if not is_django_user and not sheet_email:
+        messages.error(request, "Sign in is required to comment.")
+        return redirect(reverse("project", kwargs={"id": project_obj.pk}))
+
     form = CommentForm(request.POST)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.project = project_obj
-        comment.user = request.user
+
+        if is_django_user:
+            # normal Django user FK
+            comment.user = request.user
+        else:
+            # sheet/session path — model must have author_name for this to work
+            comment.author_name = sheet_name or sheet_email
+
         comment.save()
         messages.success(request, "Comment posted.")
     else:
         messages.error(request, "Please fix the errors and try again.")
-    # Go back to the project page
+
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
 
@@ -165,9 +185,9 @@ def auth_register(request):
 
     # open sheet
     try:
-      ws = get_users_sheet()
+        ws = get_users_sheet()
     except Exception as e:
-      return JsonResponse({"success": False, "error": f"Sheet error: {e}"}, status=500)
+        return JsonResponse({"success": False, "error": f"Sheet error: {e}"}, status=500)
 
     # read existing rows
     try:

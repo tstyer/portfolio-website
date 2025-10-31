@@ -2,15 +2,14 @@ const nameSearch = document.getElementById("name-search");
 const projects = document.querySelectorAll(".project-card");
 const tags = document.querySelectorAll(".tag");
 
-// this will read the django csrf cookie
+// read Django csrf cookie
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
-      // Does this cookie string begin with the name we want?
-      if (cookie.substring(0, name.length + 1) === (name + "=")) {
+      if (cookie.substring(0, name.length + 1) === name + "=") {
         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
         break;
       }
@@ -19,7 +18,6 @@ function getCookie(name) {
   return cookieValue;
 }
 const csrftoken = getCookie("csrftoken");
-
 
 function toggleInfoParagraph() {
   const info = document.getElementById("temp-p");
@@ -65,7 +63,6 @@ function filterProjects(nameSearchEl, projectEls) {
     }
   }
 
-  // staggered re-entry
   visibleProjects.forEach((project, index) => {
     project.classList.remove("fade-in-up");
     setTimeout(() => {
@@ -116,7 +113,6 @@ function filterByTag(tag) {
     }
   }
 
-  // staggered wave again
   visibleProjects.forEach((project, index) => {
     project.classList.remove("fade-in-up");
     setTimeout(() => {
@@ -127,10 +123,8 @@ function filterByTag(tag) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // start: all hidden
   hideAll();
 
-  // search
   if (nameSearch) {
     nameSearch.addEventListener("input", () => {
       clearActiveTags();
@@ -139,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // tag clicks
   if (tags.length) {
     tags.forEach((tagBtn) => {
       tagBtn.addEventListener("click", function () {
@@ -152,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// NAV collapse
+// nav collapse
 const btn = document.querySelector(".nav-toggle");
 const menu = document.querySelector(".nav-menu");
 if (btn && menu) {
@@ -161,9 +154,7 @@ if (btn && menu) {
   });
 }
 
-/*
-   COMMENTS MODAL
-    */
+/* COMMENTS MODAL */
 const modal = document.getElementById("comments-modal");
 const modalBody = document.getElementById("comments-modal-body");
 
@@ -186,7 +177,6 @@ function closeCommentsModal() {
   modal.classList.remove("is-open");
 }
 
-// attach to each comment button
 document.querySelectorAll(".project-card .comment-btn").forEach((btn) => {
   btn.addEventListener("click", function () {
     const card = this.closest(".project-card");
@@ -206,9 +196,7 @@ if (commentsBackdrop) {
   commentsBackdrop.addEventListener("click", closeCommentsModal);
 }
 
-/* 
-   AUTH MODAL
-    */
+/* AUTH MODAL */
 const authModal = document.getElementById("auth-modal");
 const openAuthBtn = document.getElementById("open-auth-modal");
 const closeAuthBtn = document.querySelector(".auth-modal__close");
@@ -219,8 +207,7 @@ const authSub = authModal ? authModal.querySelector(".auth-sub") : null;
 const authModeInput = document.getElementById("auth-mode");
 const authUsernameWrap = document.getElementById("auth-username-wrap");
 
-
-// this is the badge that will show "Hi, Travis"
+// badge
 const userBadge = document.getElementById("user-badge");
 
 function setLoggedIn(username) {
@@ -246,18 +233,16 @@ function closeAuth() {
 if (closeAuthBtn) closeAuthBtn.addEventListener("click", closeAuth);
 if (authBackdrop) authBackdrop.addEventListener("click", closeAuth);
 
-// toggle login/register text + hidden input
+// toggle between login/register
 if (switchToRegister) {
   switchToRegister.addEventListener("click", () => {
     if (authModeInput.value === "login") {
-      // switch to register
       authModeInput.value = "register";
       if (authTitle) authTitle.textContent = "Create an account";
       if (authSub) authSub.textContent = "Register to leave comments.";
       switchToRegister.textContent = "I already have an account";
       if (authUsernameWrap) authUsernameWrap.style.display = "block";
     } else {
-      // switch to login
       authModeInput.value = "login";
       if (authTitle) authTitle.textContent = "Welcome back";
       if (authSub) authSub.textContent = "Sign in to leave a comment.";
@@ -267,52 +252,45 @@ if (switchToRegister) {
   });
 }
 
-// submit handler (always)
+// submit handler
 const authForm = document.getElementById("auth-form");
 if (authForm) {
   authForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(authForm);
-    const mode = formData.get("mode"); // "login" or "register"
+    const mode = formData.get("mode");
 
     fetch(`/auth/${mode}/`, {
-  method: "POST",
-  body: formData,
-  headers: {
-    "X-Requested-With": "XMLHttpRequest",
-    "X-CSRFToken": csrftoken,
-  },
-})
-  .then(async (res) => {
-    // if Django errors (500/403), res.json() will fail.
-    const text = await res.text();
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      // show the HTML error Django returned — helps debugging
-      alert("Server responded with an error:\n" + text.slice(0, 300));
-      throw e;
-    }
-    return data;
-  })
-  .then((data) => {
-    if (data.success) {
-      closeAuth();
-      const userBadge = document.getElementById("user-badge");
-      if (userBadge) {
-        userBadge.textContent = `Hi, ${data.username}`;
-        userBadge.style.display = "inline-block";
-      }
-      const openAuthBtn = document.getElementById("open-auth-modal");
-      if (openAuthBtn) openAuthBtn.style.display = "none";
-    } else {
-      alert(data.error || "Could not complete request.");
-    }
-  })
-  .catch((err) => {
-    console.error(err);
-    alert("Network / parsing error.");
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRFToken": csrftoken,
+      },
+    })
+      .then(async (res) => {
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          alert("Server responded with an error:\n" + text.slice(0, 300));
+          throw e;
+        }
+        return data;
+      })
+      .then((data) => {
+        if (data.success) {
+          closeAuth();
+          setLoggedIn(data.username);
+        } else {
+          alert(data.error || "Could not complete request.");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Network / parsing error.");
+      });
   });
 }
 

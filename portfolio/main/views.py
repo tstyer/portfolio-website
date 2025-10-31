@@ -159,13 +159,12 @@ def auth_register(request):
     # write new row
     now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
     try:
-        ws.append_row([username, email, now_str, "", ""])  # matches columns in screenshot
+        ws.append_row([username, email, now_str, "", "", password])  # matches columns in screenshot
     except Exception as e:
         return JsonResponse({"success": False, "error": f"Write error: {e}"}, status=500)
 
-    # in real life we'd hash the password. for now: write to a hidden sheet or store in col?
+    # need to hash password, or do something else? research. 
     # if the sheet has a Password column, do this instead:
-    # ws.append_row([username, email, now_str, "", "", password])
 
     # mark session-like value in Django
     request.session["user_email"] = email

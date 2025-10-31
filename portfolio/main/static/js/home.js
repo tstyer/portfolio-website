@@ -46,6 +46,7 @@ function filterProjects(nameSearchEl, projectEls) {
     }
   }
 
+  // staggered re-entry
   visibleProjects.forEach((project, index) => {
     project.classList.remove("fade-in-up");
     setTimeout(() => {
@@ -96,6 +97,7 @@ function filterByTag(tag) {
     }
   }
 
+  // staggered wave again
   visibleProjects.forEach((project, index) => {
     project.classList.remove("fade-in-up");
     setTimeout(() => {
@@ -106,8 +108,10 @@ function filterByTag(tag) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // start: all hidden
   hideAll();
 
+  // search
   if (nameSearch) {
     nameSearch.addEventListener("input", () => {
       clearActiveTags();
@@ -116,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // tag clicks
   if (tags.length) {
     tags.forEach((tagBtn) => {
       tagBtn.addEventListener("click", function () {
@@ -128,17 +133,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Navigation bar collapse
+// NAV collapse
 const btn = document.querySelector(".nav-toggle");
 const menu = document.querySelector(".nav-menu");
-
 if (btn && menu) {
   btn.addEventListener("click", () => {
     menu.classList.toggle("is-open");
   });
 }
 
-// COMMENTS MODAL
+/* =========================
+   COMMENTS MODAL
+   ========================= */
 const modal = document.getElementById("comments-modal");
 const modalBody = document.getElementById("comments-modal-body");
 
@@ -161,6 +167,7 @@ function closeCommentsModal() {
   modal.classList.remove("is-open");
 }
 
+// attach to each comment button
 document.querySelectorAll(".project-card .comment-btn").forEach((btn) => {
   btn.addEventListener("click", function () {
     const card = this.closest(".project-card");
@@ -175,14 +182,14 @@ const closeBtn = document.querySelector(".comments-modal__close");
 if (closeBtn) {
   closeBtn.addEventListener("click", closeCommentsModal);
 }
-
-// close when clicking real backdrop
 const commentsBackdrop = document.querySelector(".comments-modal__backdrop");
 if (commentsBackdrop) {
   commentsBackdrop.addEventListener("click", closeCommentsModal);
 }
 
-// AUTH MODAL
+/* =========================
+   AUTH MODAL
+   ========================= */
 const authModal = document.getElementById("auth-modal");
 const openAuthBtn = document.getElementById("open-auth-modal");
 const closeAuthBtn = document.querySelector(".auth-modal__close");
@@ -191,6 +198,19 @@ const switchToRegister = document.getElementById("switch-to-register");
 const authTitle = authModal ? authModal.querySelector(".auth-title") : null;
 const authSub = authModal ? authModal.querySelector(".auth-sub") : null;
 const authModeInput = document.getElementById("auth-mode");
+
+// this is the badge that will show "Hi, Travis"
+const userBadge = document.getElementById("user-badge");
+
+function setLoggedIn(username) {
+  if (userBadge) {
+    userBadge.textContent = `Hi, ${username}`;
+    userBadge.classList.add("is-logged-in");
+  }
+  if (openAuthBtn) {
+    openAuthBtn.style.display = "none";
+  }
+}
 
 if (openAuthBtn && authModal) {
   openAuthBtn.addEventListener("click", () => {
@@ -205,6 +225,7 @@ function closeAuth() {
 if (closeAuthBtn) closeAuthBtn.addEventListener("click", closeAuth);
 if (authBackdrop) authBackdrop.addEventListener("click", closeAuth);
 
+// toggle login/register text + hidden input
 if (switchToRegister) {
   switchToRegister.addEventListener("click", () => {
     if (authModeInput.value === "login") {
@@ -221,13 +242,13 @@ if (switchToRegister) {
   });
 }
 
-// always attach submit handler
+// submit handler (always)
 const authForm = document.getElementById("auth-form");
 if (authForm) {
   authForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(authForm);
-    const mode = formData.get("mode");
+    const mode = formData.get("mode"); // "login" or "register"
 
     fetch(`/auth/${mode}/`, {
       method: "POST",
@@ -240,6 +261,9 @@ if (authForm) {
       .then((data) => {
         if (data.success) {
           closeAuth();
+          if (data.username) {
+            setLoggedIn(data.username);
+          }
         } else {
           alert(data.error || "Could not complete request.");
         }

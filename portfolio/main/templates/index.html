@@ -47,7 +47,7 @@
       </ul>
       <!--Authorise button-->
       <button type="button" class="auth-btn" id="open-auth-modal">
-    Sign in / Register
+        Sign in / Register
       </button>
     </nav>
 
@@ -80,28 +80,30 @@
           class="project-card"
           data-name="Destination Mars"
           data-tags="javascript, testing"
-          data-project-id="{{ project.id|default:1 }}> <!--Added to JS knows which comments to call-->
+          data-project-id="1"
+        >
           <h2><a href="project.html">Destination Mars</a></h2>
           <p>Falling-platform JS game with auto-jump and timers.</p>
           <p>Tags: JavaScript, Testing</p>
-           <!--Comment trigger button-->
-        <button class="comment-btn" type="button">
-          💬 Comments
-        </button>
-          </div>
+          <!--Comment trigger button-->
+          <button class="comment-btn" type="button">
+            💬 Comments
+          </button>
+        </div>
          
         <div
           class="project-card"
           data-name="portfolio website"
           data-tags="django, javascript"
-          data-project-id="{{ project.id|default:1 }}> <!--Added to JS knows which comments to call-->
+          data-project-id="2"
+        >
           <h2><a href="project.html">Portfolio Website</a></h2>
           <p>Responsive developer portfolio with search and tag filters.</p>
           <p>Tags: Django, JavaScript</p>
           <!--Comment trigger button-->
-        <button class="comment-btn" type="button">
-          💬 Comments
-        </button>
+          <button class="comment-btn" type="button">
+            💬 Comments
+          </button>
         </div>
       </section>
 
@@ -164,7 +166,7 @@
       <label for="auth-password">Password</label>
       <input type="password" id="auth-password" name="password" required>
 
-      <!-- toggle: are they registering or signing in -->
+      <!-- toggle: register or sign in -->
       <input type="hidden" id="auth-mode" name="mode" value="login">
 
       <button type="submit" class="auth-primary">Continue</button>

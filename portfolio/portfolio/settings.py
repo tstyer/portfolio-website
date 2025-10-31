@@ -87,5 +87,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-GOOGLE_SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, "cred.json")
+GOOGLE_SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, "creds.json")
 GOOGLE_SHEET_ID = "1NaIYrKXeWzqj9zHOwyd8vR0sTMlXG0mdmiDu-BNCSQU"

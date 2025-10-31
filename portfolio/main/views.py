@@ -3,19 +3,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.conf import settings
 
 from .models import Project, Tag, Comment
 from .forms import CommentForm
 
-import gspread 
-from django.conf import settings
+import gspread
 from datetime import datetime
 
-import json
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-
-# Create your views here.
+# Create views here.
 
 def home(request):
     projects = Project.objects.all()  # Gives access to all projects on the home page.
@@ -23,8 +20,10 @@ def home(request):
     # Rendering just means to show on the screen.
     return render(request, "home.html", {"projects": projects, "tags": tags})
 
+
 def contact(request):
     return render(request, "contact.html")
+
 
 def project(request, id):
     # Look for the pk we specified, within the project model.
@@ -32,7 +31,12 @@ def project(request, id):
 
     # ADDED: list comments and show empty form
     comments = project_obj.comments.select_related("user").all()
-    form = CommentForm()
+
+    # allow either Django-auth or sheet-auth to post
+    can_comment = request.user.is_authenticated or bool(
+        request.session.get("user_email")
+    )
+    form = CommentForm() if can_comment else None
 
     return render(
         request,
@@ -44,6 +48,7 @@ def project(request, id):
         },
     )
 
+
 # small partial view so the home page modal can load comments for a single project
 def project_comments_partial(request, id):
     """
@@ -52,7 +57,13 @@ def project_comments_partial(request, id):
     """
     project_obj = get_object_or_404(Project, pk=id)
     comments = project_obj.comments.select_related("user").order_by("-created_at")
-    form = CommentForm() if request.user.is_authenticated else None
+
+    # if logged in via Django OR via sheet, show form
+    can_comment = request.user.is_authenticated or bool(
+        request.session.get("user_email")
+    )
+    form = CommentForm() if can_comment else None
+
     return render(
         request,
         "partials/project_comments.html",
@@ -62,6 +73,7 @@ def project_comments_partial(request, id):
             "form": form,
         },
     )
+
 
 # Below is the ability to add comments to satisfy CRUD.
 
@@ -84,13 +96,16 @@ def comment_create(request, id):
     # Go back to the project page
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
+
 @login_required
 def comment_update(request, id, comment_id):
     """
     Update an existing comment (only by its owner).
     """
     project_obj = get_object_or_404(Project, pk=id)
-    comment = get_object_or_404(Comment, pk=comment_id, project=project_obj, user=request.user)
+    comment = get_object_or_404(
+        Comment, pk=comment_id, project=project_obj, user=request.user
+    )
 
     if request.method == "POST":
         form = CommentForm(request.POST, instance=comment)
@@ -102,6 +117,7 @@ def comment_update(request, id, comment_id):
 
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
+
 @login_required
 @require_POST
 def comment_delete(request, id, comment_id):
@@ -109,7 +125,9 @@ def comment_delete(request, id, comment_id):
     Delete a comment (only by its owner).
     """
     project_obj = get_object_or_404(Project, pk=id)
-    comment = get_object_or_404(Comment, pk=comment_id, project=project_obj, user=request.user)
+    comment = get_object_or_404(
+        Comment, pk=comment_id, project=project_obj, user=request.user
+    )
 
     comment.delete()
     messages.success(request, "Comment deleted.")
@@ -117,15 +135,18 @@ def comment_delete(request, id, comment_id):
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
 
+# ===== Google Sheet helpers / auth =====
+
 def get_users_sheet():
     """
     Returns the Google Sheet worksheet that stores users.
-    Assumes credentials already set up on settings side.
+    Assumes credentials configured in settings.
     """
     gc = gspread.service_account(filename=settings.GOOGLE_SERVICE_ACCOUNT_FILE)
-    sh = gc.open_by_key(settings.GOOGLE_SHEET_ID)   # set this in settings
-    ws = sh.worksheet("user")  # or whatever the tab is called
+    sh = gc.open_by_key(settings.GOOGLE_SHEET_ID)  # set in settings
+    ws = sh.worksheet("user")  # sheet/tab name
     return ws
+
 
 @require_POST
 def auth_register(request):
@@ -138,35 +159,43 @@ def auth_register(request):
     username = request.POST.get("username", "").strip()
 
     if not email or not password or not username:
-      return JsonResponse({"success": False, "error": "All fields required."}, status=400)
+        return JsonResponse(
+            {"success": False, "error": "All fields required."}, status=400
+        )
 
+    # open sheet
     try:
-        ws = get_users_sheet()
+      ws = get_users_sheet()
     except Exception as e:
-        return JsonResponse({"success": False, "error": f"Sheet error: {e}"}, status=500)
+      return JsonResponse({"success": False, "error": f"Sheet error: {e}"}, status=500)
 
-    # read all emails in sheet
+    # read existing rows
     try:
         records = ws.get_all_records()
     except Exception as e:
         return JsonResponse({"success": False, "error": f"Read error: {e}"}, status=500)
 
-    # check if email already exists
+    # check if email exists
     for row in records:
         if row.get("Email", "").strip().lower() == email:
-            return JsonResponse({"success": False, "error": "Email already registered."}, status=400)
+            return JsonResponse(
+                {"success": False, "error": "Email already registered."}, status=400
+            )
 
-    # write new row
+    # prepare row
     now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Columns expected from screenshot:
+    # User Name | Email | Date Joined | Comment | On Portfolio Project | Password
+    new_row = [username, email, now_str, "", "", password]
+
+    # write
     try:
-        ws.append_row([username, email, now_str, "", "", password])  # matches columns in screenshot
+        ws.append_row(new_row)
     except Exception as e:
         return JsonResponse({"success": False, "error": f"Write error: {e}"}, status=500)
 
-    # need to hash password, or do something else? research. 
-    # if the sheet has a Password column, do this instead:
-
-    # mark session-like value in Django
+    # set pseudo-session auth
     request.session["user_email"] = email
     request.session["user_name"] = username
 
@@ -182,7 +211,9 @@ def auth_login(request):
     password = request.POST.get("password", "").strip()
 
     if not email or not password:
-        return JsonResponse({"success": False, "error": "Email and password required."}, status=400)
+        return JsonResponse(
+            {"success": False, "error": "Email and password required."}, status=400
+        )
 
     try:
         ws = get_users_sheet()
@@ -199,17 +230,24 @@ def auth_login(request):
             break
 
     if not matched:
-        return JsonResponse({"success": False, "error": "Invalid credentials."}, status=401)
+        return JsonResponse(
+            {"success": False, "error": "Invalid credentials."}, status=401
+        )
 
-    # set session
+    # set session for later use on comments
     request.session["user_email"] = matched.get("Email")
-    request.session["user_name"] = matched.get("User Name") or matched.get("Username") or "Guest"
+    request.session["user_name"] = (
+        matched.get("User Name") or matched.get("Username") or "Guest"
+    )
 
-    return JsonResponse({
-        "success": True,
-        "username": request.session["user_name"],
-    })
+    return JsonResponse(
+        {
+            "success": True,
+            "username": request.session["user_name"],
+        }
+    )
 
 # Self-learn note:
 #  Views are functions called when wanting to display a page.
-#  You need to import models to do so.
+#  Models need to be imported for this file to work.
+#  Session values can be used to show/hide UI parts on the template.

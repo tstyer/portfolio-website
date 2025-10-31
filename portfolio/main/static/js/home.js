@@ -142,9 +142,9 @@ if (btn && menu) {
   });
 }
 
-/* =========================
+/*
    COMMENTS MODAL
-   ========================= */
+    */
 const modal = document.getElementById("comments-modal");
 const modalBody = document.getElementById("comments-modal-body");
 
@@ -187,9 +187,9 @@ if (commentsBackdrop) {
   commentsBackdrop.addEventListener("click", closeCommentsModal);
 }
 
-/* =========================
+/* 
    AUTH MODAL
-   ========================= */
+    */
 const authModal = document.getElementById("auth-modal");
 const openAuthBtn = document.getElementById("open-auth-modal");
 const closeAuthBtn = document.querySelector(".auth-modal__close");

@@ -276,24 +276,43 @@ if (authForm) {
     const mode = formData.get("mode"); // "login" or "register"
 
     fetch(`/auth/${mode}/`, {
-      method: "POST",
-      body: formData,
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          closeAuth();
-          if (data.username) {
-            setLoggedIn(data.username);
-          }
-        } else {
-          alert(data.error || "Could not complete request.");
-        }
-      })
-      .catch(() => alert("Network error"));
+  method: "POST",
+  body: formData,
+  headers: {
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRFToken": csrftoken,
+  },
+})
+  .then(async (res) => {
+    // if Django errors (500/403), res.json() will fail.
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      // show the HTML error Django returned — helps debugging
+      alert("Server responded with an error:\n" + text.slice(0, 300));
+      throw e;
+    }
+    return data;
+  })
+  .then((data) => {
+    if (data.success) {
+      closeAuth();
+      const userBadge = document.getElementById("user-badge");
+      if (userBadge) {
+        userBadge.textContent = `Hi, ${data.username}`;
+        userBadge.style.display = "inline-block";
+      }
+      const openAuthBtn = document.getElementById("open-auth-modal");
+      if (openAuthBtn) openAuthBtn.style.display = "none";
+    } else {
+      alert(data.error || "Could not complete request.");
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    alert("Network / parsing error.");
   });
 }
 

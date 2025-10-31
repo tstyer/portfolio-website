@@ -273,7 +273,7 @@ ul svg {
 }
 
 .comments-modal__backdrop {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.35);
   backdrop-filter: blur(3px);

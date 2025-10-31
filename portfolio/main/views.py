@@ -158,8 +158,7 @@ def comment_delete(request, id, comment_id):
     return redirect(reverse("project", kwargs={"id": project_obj.pk}))
 
 
-# ===== Google Sheet helpers / auth =====
-
+# this is a Google Sheet helper / auth 
 def get_users_sheet():
     """
     Returns the Google Sheet worksheet that stores users.
@@ -208,17 +207,14 @@ def auth_register(request):
     # prepare row
     now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
-    # Columns expected from screenshot:
-    # User Name | Email | Date Joined | Comment | On Portfolio Project | Password
-    new_row = [username, email, now_str, "", "", password]
+    new_row = [username, email, now_str, password]
 
-    # write
     try:
         ws.append_row(new_row)
     except Exception as e:
         return JsonResponse({"success": False, "error": f"Write error: {e}"}, status=500)
 
-    # set pseudo-session auth
+    # thi will set pseudo-session auth
     request.session["user_email"] = email
     request.session["user_name"] = username
 

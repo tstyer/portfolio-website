@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.conf import settings
+from django.utils import timezone
 
 from .models import Project, Tag, Comment
 from .forms import CommentForm
@@ -171,7 +172,6 @@ def get_users_sheet():
 
 
 @require_POST
-@require_POST
 def auth_register(request):
     """
     Register a new user in Google Sheets.
@@ -216,7 +216,8 @@ def auth_register(request):
             )
 
     # build row in same order as header
-    now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+    now = timezone.localtime(timezone.now())   # UK time
+    now_str = now.strftime("%Y-%m-%d %H:%M:%S")
     new_row = [username, email, now_str, password]
 
     # write to sheet

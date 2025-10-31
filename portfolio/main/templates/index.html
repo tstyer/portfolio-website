@@ -153,22 +153,28 @@
   </div>
 </div>
 
-    <!-- authorisation modal -->
+ <!-- authorisation modal -->
 <div id="auth-modal" class="auth-modal">
   <div class="auth-modal__backdrop"></div>
   <div class="auth-modal__content">
     <button class="auth-modal__close" type="button">×</button>
-    <h2 class="auth-title">Welcome</h2>
+    <h2 class="auth-title">Welcome back</h2>
     <p class="auth-sub">Sign in to leave a comment.</p>
 
     <form id="auth-form">
+      <!-- shown only when registering -->
+      <div id="auth-username-wrap" style="display:none;">
+        <label for="auth-username">Name</label>
+        <input type="text" id="auth-username" name="username" autocomplete="name">
+      </div>
+
       <label for="auth-email">Email</label>
       <input type="email" id="auth-email" name="email" required>
 
       <label for="auth-password">Password</label>
       <input type="password" id="auth-password" name="password" required>
 
-      <!-- toggle: register or sign in -->
+      <!-- toggle to register or sign in -->
       <input type="hidden" id="auth-mode" name="mode" value="login">
 
       <button type="submit" class="auth-primary">Continue</button>
@@ -179,6 +185,8 @@
       <button type="button" id="switch-to-register">Create an account</button>
     </p>
   </div>
+</div>
+
 </div>
 
 

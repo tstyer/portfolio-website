@@ -84,7 +84,7 @@ def project_comments_partial(request, id):
 def comment_create(request, id):
     """
     Create a new comment on a project.
-    Accepts:
+    only accepts:
     - Django authenticated users
     - Sheet/session users (email + name stored in session)
     """
@@ -171,10 +171,11 @@ def get_users_sheet():
 
 
 @require_POST
+@require_POST
 def auth_register(request):
     """
-    Registers a user in the Google Sheet.
-    Expected fields: email, password, username
+    Register a new user in Google Sheets.
+    Expected fields: username, email, password.
     """
     email = request.POST.get("email", "").strip().lower()
     password = request.POST.get("password", "").strip()
@@ -182,39 +183,52 @@ def auth_register(request):
 
     if not email or not password or not username:
         return JsonResponse(
-            {"success": False, "error": "All fields required."}, status=400
+            {"success": False, "error": "All fields required."},
+            status=400,
         )
 
     # open sheet
     try:
         ws = get_users_sheet()
     except Exception as e:
-        return JsonResponse({"success": False, "error": f"Sheet error: {e}"}, status=500)
+        return JsonResponse(
+            {"success": False, "error": f"Sheet error: {e}"},
+            status=500,
+        )
 
-    # read existing rows
+    # read rows using the exact header order in the sheet
     try:
-        records = ws.get_all_records()
+        records = ws.get_all_records(
+            expected_headers=["User Name", "Email", "Date Joined", "Password"]
+        )
     except Exception as e:
-        return JsonResponse({"success": False, "error": f"Read error: {e}"}, status=500)
+        return JsonResponse(
+            {"success": False, "error": f"Read error: {e}"},
+            status=500,
+        )
 
-    # check if email exists
+    # check for duplicate email
     for row in records:
         if row.get("Email", "").strip().lower() == email:
             return JsonResponse(
-                {"success": False, "error": "Email already registered."}, status=400
+                {"success": False, "error": "Email already registered."},
+                status=400,
             )
 
-    # prepare row
+    # build row in same order as header
     now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-
     new_row = [username, email, now_str, password]
 
+    # write to sheet
     try:
         ws.append_row(new_row)
     except Exception as e:
-        return JsonResponse({"success": False, "error": f"Write error: {e}"}, status=500)
+        return JsonResponse(
+            {"success": False, "error": f"Write error: {e}"},
+            status=500,
+        )
 
-    # thi will set pseudo-session auth
+    # store mini-session for comments
     request.session["user_email"] = email
     request.session["user_name"] = username
 

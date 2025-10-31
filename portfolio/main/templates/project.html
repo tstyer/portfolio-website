@@ -88,7 +88,7 @@
             </div>
             <p class="comment-content">{{ c.content }}</p>
 
-            {% if user.is_authenticated and (c.user_id == user.id or user.is_staff) %}
+            {% if user.is_authenticated and c.user_id == user.id or user.is_staff %}
               <form method="post" action="{% url 'comment_delete' id=project.id comment_id=c.id %}" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this comment?');">Delete</button>

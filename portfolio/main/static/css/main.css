@@ -127,7 +127,7 @@ a, h1 strong {
 /* mint hover, lighter than before */
 .nav-menu a:hover { 
   background: rgba(47, 187, 170, 0.15);
-  color: #fff;
+  color: var(--color-text);
 }
 
 /* gives the nav elements a pill on hover */
@@ -223,7 +223,6 @@ button {
   font-size: 1.8rem;
   cursor: pointer;
 }
-
 
 /* Footer */
 
@@ -338,7 +337,7 @@ ul svg {
 
 .auth-btn:hover {
   background: rgba(47, 187, 170, 0.35);
-  color: #fff;
+  color: var(--color-text);
 }
 
 /* modal shell */

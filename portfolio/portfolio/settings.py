@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-w6a1-meh!qik3$@!hqtlkace@&iz1p!&v96s8qez#j@epfmk6t
 # !REMINDER:turn this ON while developing, otherwise static WON'T serve
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".herokuapp.com"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",

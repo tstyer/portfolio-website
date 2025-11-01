@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-w6a1-meh!qik3$@!hqtlkace@&iz1p!&v96s8qez#j@epfmk6t
 # !REMINDER:turn this ON while developing, otherwise static WON'T serve
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", '.herokuapp.com']
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", '.herokuapp.com', 'portfolio-website-f8f1acdf4bfd.herokuapp.com']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -80,6 +81,8 @@ STATICFILES_DIRS = [
 
 # collectstatic will dump into this when deploying
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media
 MEDIA_URL = "/media/"

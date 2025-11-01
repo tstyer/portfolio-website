@@ -165,6 +165,8 @@ def get_users_sheet():
     Returns the Google Sheet worksheet that stores users.
     Assumes credentials configured in settings.
     """
+    import gspread 
+    
     gc = gspread.service_account(filename=settings.GOOGLE_SERVICE_ACCOUNT_FILE)
     sh = gc.open_by_key(settings.GOOGLE_SHEET_ID)  # set in settings
     ws = sh.worksheet("user")  # sheet/tab name

@@ -11,7 +11,6 @@ from django.utils import timezone
 from .models import Project, Tag, Comment
 from .forms import CommentForm
 
-import gspread
 from datetime import datetime
 
 # Create views here.

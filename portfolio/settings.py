@@ -63,8 +63,11 @@ DATABASES = {
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"name": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
 ]
+
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"

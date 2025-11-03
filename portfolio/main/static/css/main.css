@@ -1,29 +1,37 @@
-/* keeping all my headers, paragraphs and tags here */
+/* ===============================
+   Root variables & typography
+   =============================== */
 
-/* Typography (Google fonts loaded in <head>) */
-:root{
+:root {
   --font-header: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
   --color-bg: #F6FAFF;
   --color-text: #262A2E;
-  --color-accent: #6C63FF; /* colour accent */
-  --color-atags: #4EE0CB;  /* main colour */
+  --color-accent: #6C63FF;       /* accent colour */
+  --color-atags: #4EE0CB;        /* main highlight colour */
   --color-lightblue: #A4C8F0;
   --color-shadow: #C8E8F8;
-  --base-font-size: 1rem;
   --H2H3P-Colour: #2FBBAA;
   --H1-Colour: #5B55E0;
+
+  --color-primary: #2FBBAA;      /* added to match buttons / accents */
+  --base-font-size: 1rem;
 }
 
-/* Reset / base */
-* { 
-  box-sizing: border-box; 
-  margin: 0; 
-  padding: 0; 
+/* ===============================
+   Base / reset
+   =============================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html, body { 
-  height: 100%; 
+html,
+body {
+  height: 100%;
 }
 
 body {
@@ -48,64 +56,95 @@ body {
   padding: 1rem; /* On smaller screens, gets text off edge */
 }
 
-/* Headings use Poppins for a confident tone */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-header);
   letter-spacing: -0.25px;
 }
 
-h1 { 
-  font-weight: 700; 
-  font-size: clamp(2rem, 4.5vw, 3rem); 
+h1 {
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3rem);
   color: var(--H1-Colour);
 }
 
-h2 { 
-  font-weight: 600; 
+h2 {
+  font-weight: 600;
   font-size: calc(var(--base-font-size));
   letter-spacing: 0.25em;
   color: #249988;
 }
 
-
-/* Called by JS */
-
-.hidden {
-  display: none;
+p {
+  line-height: 1.5;
+  font-size: 0.95rem;
 }
 
-/* fade and slide up of projects */
-@keyframes fade-in-up {
-  from {
-    opacity: 0; /* starts invisible */
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1; /* fully visible */
-    transform: translateY(0);
-  }
-}
-
-/* base class I will add from JS - it uses this when tag clicked or search made */
-.fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
-}
-
-/* ABOVE: Called by JS */
-
-
-a { 
-  text-decoration: none; 
+a {
+  text-decoration: none;
   font-family: var(--font-body);
   color: var(--color-atags);
   transition: color 0.25s ease;
 }
 
-a, h1 strong {
+a,
+h1 strong {
   color: var(--color-atags);
 }
 
-/* desktop nav */
+.hidden {
+  display: none;
+}
+
+/* ===============================
+   Animations
+   =============================== */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   Nav / header
+   =============================== */
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  backdrop-filter: blur(6px);
+  box-shadow: none;
+}
+
 .nav-menu {
   list-style: none;
   display: flex;
@@ -117,7 +156,7 @@ a, h1 strong {
   backdrop-filter: blur(4px);
 }
 
-.nav-menu a { 
+.nav-menu a {
   color: var(--color-atags);
   transition: background 0.25s ease, color 0.25s ease;
   padding: 0.35rem 0.85rem;
@@ -125,15 +164,28 @@ a, h1 strong {
 }
 
 /* mint hover, lighter than before */
-.nav-menu a:hover { 
+.nav-menu a:hover {
   background: rgba(47, 187, 170, 0.15);
   color: var(--color-text);
 }
 
-/* gives the nav elements a pill on hover */
 .nav-menu .nav-link.active {
   background: rgba(47, 187, 170, 0.6);
   color: #fff;
+}
+
+/* burger toggle */
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+button {
+  color: var(--color-primary);
 }
 
 /* Tagline */
@@ -147,30 +199,15 @@ a, h1 strong {
   font-weight: 400;
 }
 
-@keyframes fade-in { /* Used this to add a soft intro to tagline */
-  from { 
-    opacity: 0; 
-    transform: translateY(6px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
-}
-
 .tagline {
   animation: fade-in 0.8s ease-out 0.3s forwards;
   opacity: 0; /* start hidden, animation reveals it */
 }
 
-/* p's on any page */
+/* ===============================
+   Tags / filters
+   =============================== */
 
-p {
-  line-height: 1.5; /* H?aving just 1.5 multiplies 1.5 by the current unit of the font. */
-  font-size: 0.95rem;
-}
-
-/* Filter tags (outline style to stop competing with the h1) */
 .tag {
   background-color: transparent;
   color: var(--color-text);
@@ -188,49 +225,19 @@ p {
   transform: scale(1.02);
 }
 
-/* active tag (clicked) */
 .tag.active {
   background-color: rgba(47, 187, 170, 0.25);
   color: #262A2E;
   border-color: rgba(47, 187, 170, 0.7);
 }
 
-/* Burger nav */
-
-button {
-  color: var(--color-primary);
-}
-
-.site-nav {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1.5rem;
-  background: transparent;
-  backdrop-filter: blur(6px);
-  box-shadow: none;
-}
-
-/* hide burger on big screens */
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  cursor: pointer;
-}
-
-/* Footer */
+/* ===============================
+   Footer & social icons
+   =============================== */
 
 footer {
   margin-top: auto;
 }
-
-/* svg social icons */
 
 .icons {
   list-style-type: none;
@@ -258,9 +265,10 @@ ul svg {
   fill: var(--H2H3P-Colour);
 }
 
-/* comment modal styling */
+/* ===============================
+   Comments modal
+   =============================== */
 
-/* comments modal */
 .comments-modal {
   position: fixed;
   inset: 0;
@@ -275,7 +283,7 @@ ul svg {
 .comments-modal__backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(3px);
 }
 
@@ -285,7 +293,7 @@ ul svg {
   background: #fff;
   margin: 6vh auto 0;
   border-radius: 14px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
   padding: 1.25rem 1.25rem 1.5rem;
   z-index: 1001;
   text-align: left;
@@ -320,9 +328,8 @@ ul svg {
   background: rgba(47, 187, 170, 0.2);
 }
 
-/* Comment modal text styling */
-
 /* comment form inside comments modal */
+
 .comments .comment-form {
   margin-bottom: 1.2rem;
 }
@@ -364,10 +371,12 @@ ul svg {
 
 .comments .comment-form .btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-/* authorisation modal */
+/* ===============================
+   Auth modal
+   =============================== */
 
 .auth-btn {
   margin-left: auto;
@@ -387,6 +396,7 @@ ul svg {
 }
 
 /* modal shell */
+
 .auth-modal {
   position: fixed;
   inset: 0;
@@ -403,7 +413,7 @@ ul svg {
 .auth-modal__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .auth-modal__content {
@@ -412,7 +422,7 @@ ul svg {
   border-radius: 14px;
   padding: 1.5rem 1.75rem;
   width: min(420px, 92vw);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
   z-index: 1;
   text-align: left;
 }
@@ -438,7 +448,7 @@ ul svg {
 #auth-form input[type="password"] {
   width: 100%;
   padding: 0.45rem 0.6rem;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   font-size: 0.9rem;
 }
@@ -466,58 +476,90 @@ ul svg {
   font-weight: 500;
 }
 
+/* ===============================
+   About page hero
+   =============================== */
 
-/* Layout */
-main { 
-  margin-top: 20px; 
+.about-hero {
+  padding: 3.5rem 0 4rem;
+  display: flex;
+  justify-content: center;
 }
 
-/* Responsive nav */
-@media (max-width: 500px) {
-  .nav-menu { 
-    flex-direction: column; 
-    gap: 10px; 
-  }
+.about-hero-inner {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
 }
 
-@media screen and (max-width: 500px) {
-  .nav-menu {
-    flex-direction: column;
-  }
+.about-copy {
+  flex: 1;
+  text-align: left;
 }
 
-/* below 500px: show burger, hide menu (will re-show with JS) */
+.about-copy h1 {
+  margin-bottom: 0.75rem;
+}
+
+.about-lede {
+  font-size: 1.05rem;
+  color: var(--H2H3P-Colour);
+  margin-bottom: 0.75rem;
+}
+
+.about-copy p {
+  max-width: 36rem;
+  margin-bottom: 0.6rem;
+}
+
+.about-illustration {
+  flex: 0 0 220px;
+}
+
+.about-illustration img {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+}
+
+/* ===============================
+   Layout
+   =============================== */
+
+main {
+  margin-top: 20px;
+}
+
+/* ===============================
+   Responsive
+   =============================== */
+
+/* nav tweaks */
+
 @media (max-width: 500px) {
   .nav-toggle {
     display: block;
   }
-  .nav-menu {
-    display: none;
-  }
-  .nav-menu.is-open {
-    display: flex;
-  }
-}
 
-/* mobile styles */
-@media (max-width: 542px) {
-  .nav-toggle {
-    display: block;
-  }
-
-  /* hide menu by default */
   .nav-menu {
     display: none;
     flex-direction: column;
     justify-content: flex-start;
     gap: 0;
-    position: absolute;   /* take it out of the doc flow */
-    top: 100%;            /* right below the nav bar */
+    position: absolute;
+    top: 100%;
     left: 0;
-    background: rgba(255, 255, 255, 0.93); /* semi-transparent */
+    background: rgba(255, 255, 255, 0.93);
     padding: 0.75rem 1rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     z-index: 100;
+  }
+
+  .nav-menu.is-open {
+    display: flex;
   }
 
   .nav-menu li a {
@@ -525,11 +567,11 @@ main {
   }
 }
 
-/* for smaller screens */
+/* about hero / general spacing */
 
 @media (max-width: 600px) {
   body {
-    padding: 10px; /* smaller outer padding */
+    padding: 10px;
   }
 
   .wrapper {
@@ -544,14 +586,11 @@ main {
     gap: 1rem;
   }
 
-  /* make sure cards don’t overflow or look too wide */
   .project-card {
     max-width: 100%;
     margin: 0 0 1rem 0;
     border-radius: 12px;
   }
-
-  /* for the header and text */
 
   header {
     margin-top: 0.5rem;
@@ -579,3 +618,22 @@ main {
   }
 }
 
+@media (max-width: 700px) {
+  .about-hero-inner {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .about-copy {
+    text-align: center;
+  }
+
+  .about-copy p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-illustration {
+    flex: 0 0 auto;
+  }
+}

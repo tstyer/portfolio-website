@@ -77,6 +77,8 @@ STATIC_URL = "/static/"
 # collectstatic will dump into this when deploying
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+STATICFILES_DIRS = [ BASE_DIR / "portfolio" / "main" / "static" ]
+
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media

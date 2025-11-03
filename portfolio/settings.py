@@ -74,11 +74,6 @@ USE_TZ = True
 # Static's
 STATIC_URL = "/static/"
 
-# For portfolio/main/static/...
-STATICFILES_DIRS = [
-    BASE_DIR / "main" / "static"
-]
-
 # collectstatic will dump into this when deploying
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -90,6 +85,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-GOOGLE_SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, "portfolio", "creds.json")
+GOOGLE_SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, "creds.json")
 
 GOOGLE_SHEET_ID = "1NaIYrKXeWzqj9zHOwyd8vR0sTMlXG0mdmiDu-BNCSQU"

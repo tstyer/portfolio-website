@@ -265,6 +265,11 @@ ul svg {
   fill: var(--H2H3P-Colour);
 }
 
+p .social {
+  width: 25px;
+  height: 25px;
+}
+
 /* ===============================
    Comments modal
    =============================== */

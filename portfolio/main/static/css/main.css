@@ -558,7 +558,7 @@ main {
 
 /* nav tweaks */
 
-@media (max-width: 500px) {
+@media (max-width: 541px) {
   .nav-toggle {
     display: block;
   }

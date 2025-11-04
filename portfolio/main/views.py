@@ -23,14 +23,29 @@ def home(request):
 
 
 def contact(request):
+    """
+    Handle contact form submissions and render the contact page.
+    """
+    if request.method == "POST":
+        name = request.POST.get("name", "").strip()
+        email = request.POST.get("email", "").strip()
+        subject = request.POST.get("subject", "").strip()
+        message_text = request.POST.get("message", "").strip()
+
+        # Form data can be processed here if needed 
+
+        messages.success(request, "Message received. A response will be sent if required.")
+        return redirect("contact")
+
     return render(request, "contact.html")
+
 
 def about(request):
     return render(request, "about.html")
 
 
 def project(request, id):
-    # Look for the pk we specified, within the project model.
+    # Look for the pk specified, within the project model.
     project_obj = get_object_or_404(Project, pk=id)
 
     # ADDED: list comments and show empty form
@@ -53,7 +68,7 @@ def project(request, id):
     )
 
 
-# small partial view so the home page modal can load comments for a single project
+# partial view so the home page modal can load comments for a single project
 def project_comments_partial(request, id):
     """
     Render just the comments + (optional) form for a specific project.

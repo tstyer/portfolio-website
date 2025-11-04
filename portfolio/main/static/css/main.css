@@ -1,4 +1,4 @@
-/* ===============================
+/* 
    Root variables & typography
    =============================== */
 
@@ -19,9 +19,9 @@
   --base-font-size: 1rem;
 }
 
-/* ===============================
+/* 
    Base / reset
-   =============================== */
+   */
 
 * {
   box-sizing: border-box;
@@ -97,9 +97,9 @@ h1 strong {
   display: none;
 }
 
-/* ===============================
+/* 
    Animations
-   =============================== */
+   = */
 
 @keyframes fade-in-up {
   from {
@@ -127,9 +127,9 @@ h1 strong {
   }
 }
 
-/* ===============================
+/* 
    Nav / header
-   =============================== */
+   */
 
 .site-nav {
   position: sticky;
@@ -204,9 +204,9 @@ button {
   opacity: 0; /* start hidden, animation reveals it */
 }
 
-/* ===============================
+/* 
    Tags / filters
-   =============================== */
+  */
 
 .tag {
   background-color: transparent;
@@ -231,9 +231,9 @@ button {
   border-color: rgba(47, 187, 170, 0.7);
 }
 
-/* ===============================
+/* 
    Footer & social icons
-   =============================== */
+   */
 
 footer {
   margin-top: auto;
@@ -284,9 +284,9 @@ ul svg {
   fill: var(--H2H3P-Colour);  /* mint accent */
 }
 
-/* ===============================
+/* 
    Comments modal
-   =============================== */
+   */
 
 .comments-modal {
   position: fixed;
@@ -393,9 +393,9 @@ ul svg {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-/* ===============================
+/* 
    Auth modal
-   =============================== */
+   */
 
 .auth-btn {
   margin-left: auto;

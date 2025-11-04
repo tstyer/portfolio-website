@@ -52,6 +52,15 @@
       <p>Send me a message below!</p>
     </header>
 
+    {% if messages %}
+  <div class="flash-messages">
+    {% for message in messages %}
+      <p class="flash flash-{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
   <main>
   
   <!--Contact form-->

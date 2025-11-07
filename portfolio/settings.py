@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "portfolio.main",
+    "main",
 ]
 
 MIDDLEWARE = [
@@ -34,7 +34,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "portfolio.urls"
+ROOT_URLCONF = "urls"
 
 TEMPLATES = [
     {
@@ -53,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "portfolio.wsgi.application"
+WSGI_APPLICATION = "wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.parse(
